@@ -41,7 +41,7 @@ int main()
         for(row=0; row <4; row++)
 		{
 			// Define a single core work group (size 1x4)
-			e_open(&dev,row,col,1,4);
+			e_open(&dev,row,0,1,4);
 			// Perform soft reset of the created work group
 			e_reset_group(&dev);
 
