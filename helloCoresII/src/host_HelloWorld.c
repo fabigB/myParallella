@@ -64,9 +64,9 @@ int main()
             for(col=0; col <4; col++)
             {	
 				// Read data of length of the buffer from the work group to local buffer
-                e_read(&mBuf,0,0,0x0, message, sizeof(message));
+                e_read(&dev,0,0,0x0, message, sizeof(message));
                 // Print Result for user to see:
-                fprintf(stderr,"Core row:%i, col %i sends: %s\n", row, col, message);
+                fprintf(stderr,"Core row:%i, col:%i sends: %s\n", row, col, message);
                 // Close work group and free allocated resources. 
                 e_close(&dev);
         	}
