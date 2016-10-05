@@ -15,7 +15,7 @@ int main()
 {
         /************Variable declaration*************/
         unsigned row, col;
-        char message[128];
+        int message;
 		char appNameBuf[32];
 
         /*********Epiphany var declaration***********/
@@ -23,8 +23,6 @@ int main()
         e_platform_t    epiphany_config;
         // Core group data:
         e_epiphany_t    dev;
-        // external memory buffer data:
-        e_mem_t			mBuf;
         // Return values: (could be E_OK, E_ERR or E_WARN)
         e_return_stat_t feedback;
 
@@ -35,8 +33,6 @@ int main()
         e_reset_system();
         // Get platform specific configuration, number of devices, external memory, ...
         e_get_platform_info(&epiphany_config);
-        // Allocate shared memory:
-		e_alloc(&mBuf, BUFFEROFFSET, sizeof(message));
 
         for(row=0; row <4; row++)
 		{
@@ -64,15 +60,13 @@ int main()
             for(col=0; col <4; col++)
             {	
 				// Read data of length of the buffer from the work group to local buffer
-                e_read(&dev,0,0,0x0, message, sizeof(message));
+                e_read(&dev,0,col,0x0, &message, sizeof(int));
                 // Print Result for user to see:
-                fprintf(stderr,"Core row:%i, col:%i sends: %s\n", row, col, message);
+                fprintf(stderr,"Core row:%i, col:%i sends: %i\n", row, col, message);
                 // Close work group and free allocated resources. 
                 e_close(&dev);
         	}
         }
-        // release resources allocated by e_alloc 
-        e_free(&mBuf);
         // release resources allocated by e_init        
         e_finalize();
 

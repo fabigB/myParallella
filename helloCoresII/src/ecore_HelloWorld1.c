@@ -10,7 +10,7 @@
 
 #include "e_lib.h"
 
-char outbuffer[128] SECTION("shared_dram");
+int * outbuffer;
 
 int main(void) {
         // Variable deceleration for the core id
@@ -19,7 +19,8 @@ int main(void) {
         coreid = e_get_coreid();
 
         // Write message:
-        sprintf(outbuffer, "Hello Running App1 from 0x%x", coreid);
+        outbuffer = (int*)0x3000;
+		*outbuffer = 1;
         return 0;
 }
 
