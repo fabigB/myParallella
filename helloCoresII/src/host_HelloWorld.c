@@ -15,7 +15,7 @@ int main()
 {
         /************Variable declaration*************/
         unsigned row, col;
-        char message;
+        char message[128];
 		char appNameBuf[32];
 
         /*********Epiphany var declaration***********/
@@ -60,9 +60,9 @@ int main()
             for(col=0; col <4; col++)
             {	
 				// Read data of length of the buffer from the work group to local buffer
-                e_read(&dev,0,col,0x3000, &message, sizeof(char));
+                e_read(&dev,0,col,0x3000, &message, 128);
                 // Print Result for user to see:
-                fprintf(stderr,"Core row:%i, col:%i sends: %i\n", row, col, message);
+                fprintf(stderr,"Core row:%i, col:%i sends: %s\n", row, col, message);
         	}
 			// Close work group and free allocated resources. 
             e_close(&dev);

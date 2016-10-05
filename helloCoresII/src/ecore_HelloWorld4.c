@@ -20,7 +20,7 @@ int main(void) {
 
         // Write message:
         outbuffer = (char *) 0x3000;
-		*outbuffer = 'd';
+		sprintf(outbuffer, "Hello Running App1 from 0x%x", coreid);
         return 0;
 }
 
