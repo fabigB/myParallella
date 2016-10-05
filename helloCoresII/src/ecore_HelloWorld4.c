@@ -10,7 +10,7 @@
 
 #include "e_lib.h"
 
-int * outbuffer;
+int *outbuffer;
 
 int main(void) {
         // Variable deceleration for the core id
