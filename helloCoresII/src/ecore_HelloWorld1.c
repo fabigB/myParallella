@@ -10,7 +10,7 @@
 
 #include "e_lib.h"
 
-int *outbuffer;
+char *outbuffer;
 
 int main(void) {
         // Variable deceleration for the core id
@@ -19,8 +19,8 @@ int main(void) {
         coreid = e_get_coreid();
 
         // Write message:
-		outbuffer = (unsigned int *) 0x3000;
-		*outbuffer = 1;
+		outbuffer = (char *) 0x3000;
+		*outbuffer = 'a';
         return 0;
 }
 
