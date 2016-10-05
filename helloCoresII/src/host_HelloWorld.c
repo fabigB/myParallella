@@ -63,9 +63,9 @@ int main()
                 e_read(&dev,0,col,0x3000, &message, sizeof(int));
                 // Print Result for user to see:
                 fprintf(stderr,"Core row:%i, col:%i sends: %i\n", row, col, message);
-                // Close work group and free allocated resources. 
-                e_close(&dev);
         	}
+			// Close work group and free allocated resources. 
+            e_close(&dev);
         }
         // release resources allocated by e_init        
         e_finalize();
