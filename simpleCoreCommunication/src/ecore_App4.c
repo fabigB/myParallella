@@ -2,15 +2,14 @@
 
 #include "e_lib.h"
 
-char *outbuffer;
-int *myX;
-int *remoteX;
-
 #define ptr_adr_mycore 0x3500
 #define ptr_adr_core0  0x80803500
 
-
 int main(void) {
+		char *outbuffer;
+		int *myX;
+		int *remoteX;
+
         // Variable deceleration for the core id
         e_coreid_t coreid;
         coreid = e_get_coreid();
