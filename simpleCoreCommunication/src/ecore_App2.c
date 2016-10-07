@@ -7,7 +7,7 @@ int *myX;
 int *remoteX;
 
 #define ptr_adr_mycore 0x3500
-#define ptr_adr_core3 0x80A01000
+#define ptr_adr_core3  0x80A03500
 
 
 int main(void) {
@@ -17,12 +17,12 @@ int main(void) {
 
 		// Do calculation with x:
 		myX = (int *) ptr_adr_mycore;
-		*myX = 1;		
+		*myX = 2;		
 		remoteX = (int *) ptr_adr_core3;
 		
         // Write message:
 		outbuffer = (char *) 0x3000;
-		sprintf(outbuffer, "Hello Running App2 from 0x%x my x:%i remote x:%i", coreid, myX,remoteX);
+		sprintf(outbuffer, "Hello Running App2 from 0x%x my x:%i remote x:%i", coreid, *myX, *remoteX);
         return 0;
 }
 

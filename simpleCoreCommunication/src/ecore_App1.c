@@ -22,7 +22,7 @@ int main(void) {
 		
         // Write message:
 		outbuffer = (char *) 0x3000;
-		sprintf(outbuffer, "Hello Running App1 from 0x%x my x:%i remote x:%i", coreid, myX,remoteX);
+		sprintf(outbuffer, "Hello Running App1 from 0x%x my x:%i remote x:%i", coreid, *myX, *remoteX);
         return 0;
 }
 
