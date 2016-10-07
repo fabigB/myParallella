@@ -15,12 +15,7 @@ int main(void) {
         coreid = e_get_coreid();
 
 		// Do calculation with x:
-		myX = (int *) ptr_adr_mycore;
-		*myX=0;		
-		for (int i = 0; i < 10000; i++)
-		{
-			*myX++;
-		}
+		myX = (int *) ptr_adr_mycore;		
 		*myX = 3;		
 		remoteX = (int *) ptr_adr_core4;
 		
