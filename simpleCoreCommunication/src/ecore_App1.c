@@ -23,7 +23,7 @@ int main(void) {
 	// Do calculation with x:
 	myX = (int *) ptr_adr_mycore;
 	*myX = 1;		
-	//e_barrier(bar_array,tgt_bar_array);
+	e_barrier(bar_array,tgt_bar_array);
 	remoteX = (int *) ptr_adr_core2;
 
     // Write message:
