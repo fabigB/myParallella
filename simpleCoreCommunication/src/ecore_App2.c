@@ -3,8 +3,10 @@
 #include "e_lib.h"
 
 char *outbuffer;
-int *x;
+int *myX;
+int *remoteX;
 
+#define ptr_adr_mycore 0x3500
 #define ptr_adr_core3 0x80A01000
 
 
@@ -14,11 +16,13 @@ int main(void) {
         coreid = e_get_coreid();
 
 		// Do calculation with x:
-		x = (int *) ptr_adr_core3;
-		x = x+2;
-
+		myX = (int *) ptr_adr_mycore;
+		*myX = 1;		
+		remoteX = (int *) ptr_adr_core3;
+		
         // Write message:
 		outbuffer = (char *) 0x3000;
-		sprintf(outbuffer, "Hello Running App2 from 0x%x my x is: %i", coreid, x);
+		sprintf(outbuffer, "Hello Running App2 from 0x%x my x:%i remote x:%i", coreid, myX,remoteX);
         return 0;
 }
+
