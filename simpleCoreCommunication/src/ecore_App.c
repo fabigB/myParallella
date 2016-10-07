@@ -22,13 +22,17 @@ int main(void) {
 
 	// Do calculation with x:
 	myX = (int *) ptr_adr_mycore;
-	*myX = 1;		
+	if 		(coreid == 0x808) *myX = 1;
+	else if (coreid == 0x809) *myX = 2;
+	else if (coreid == 0x80A) *myX = 3;
+	else 					  *myX = 4;
+		
 	e_barrier(bar_array,tgt_bar_array);
 	remoteX = (int *) ptr_adr_core2;
 
     // Write message:
 	outbuffer = (char *) 0x3000;
-	sprintf(outbuffer, "Hello Running App1 from 0x%x my x:%i remote x:%i", coreid, *myX, *remoteX);
+	sprintf(outbuffer, "Hello Running from 0x%x my x:%i remote x:%i", coreid, *myX, *remoteX);
     return 0;
 }
 

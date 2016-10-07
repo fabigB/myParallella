@@ -36,8 +36,8 @@ int main()
     		// Load an Epiphany program HelloWorld onto each of the work group
 			// Row and column parameters are relative to work group. Hence 0,0. 
             // Last parameter: E_TRUE is the start parameter and this program will be launched after start 
-			snprintf(appNameBuf, sizeof(appNameBuf), "e_App%i.elf", col+1);		        
-			feedback = e_load(appNameBuf,&dev,0,col,E_FALSE);
+			//snprintf(appNameBuf, sizeof(appNameBuf), "e_App%i.elf", col+1);		        
+			feedback = e_load("e_App.elf",&dev,0,col,E_FALSE);
             if (feedback != E_OK)
             {
                     fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:%i \n", feedback,col);

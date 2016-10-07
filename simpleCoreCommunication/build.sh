@@ -16,7 +16,7 @@ fi
 ${CROSS_PREFIX}gcc src/host_CoreCom.c -o debug/hostCom.elf -I ${EINCS} -L ${ELIBS} -le-hal -le-loader
 
 # Build DEVICE side program
-e-gcc -T ${ELDF} src/ecore_App1.c -o debug/e_App1.elf -le-lib
-e-gcc -T ${ELDF} src/ecore_App2.c -o debug/e_App2.elf -le-lib
-e-gcc -T ${ELDF} src/ecore_App3.c -o debug/e_App3.elf -le-lib
-e-gcc -T ${ELDF} src/ecore_App4.c -o debug/e_App4.elf -le-lib
+e-gcc -T ${ELDF} src/ecore_App.c -o debug/e_App.elf -le-lib
+#e-gcc -T ${ELDF} src/ecore_App2.c -o debug/e_App2.elf -le-lib
+#e-gcc -T ${ELDF} src/ecore_App3.c -o debug/e_App3.elf -le-lib
+#e-gcc -T ${ELDF} src/ecore_App4.c -o debug/e_App4.elf -le-lib
