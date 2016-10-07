@@ -22,7 +22,7 @@ e-gcc -T ${ELDF} src/ecore_HelloWorld3.c -o debug/e_helloWorld3.elf -le-lib
 e-gcc -T ${ELDF} src/ecore_HelloWorld4.c -o debug/e_helloWorld4.elf -le-lib
 
 # Convert ebinary to SREC file
-e-objcopy --srec-forceS3 --output-target srec debug/e_helloWorld1.elf debug/helloWorld1.srec
-e-objcopy --srec-forceS3 --output-target srec debug/e_helloWorld2.elf debug/helloWorld2.srec
-e-objcopy --srec-forceS3 --output-target srec debug/e_helloWorld3.elf debug/helloWorld3.srec
-e-objcopy --srec-forceS3 --output-target srec debug/e_helloWorld4.elf debug/helloWorld4.srec
+#e-objcopy --srec-forceS3 --output-target srec debug/e_helloWorld1.elf debug/helloWorld1.srec
+#e-objcopy --srec-forceS3 --output-target srec debug/e_helloWorld2.elf debug/helloWorld2.srec
+#e-objcopy --srec-forceS3 --output-target srec debug/e_helloWorld3.elf debug/helloWorld3.srec
+#e-objcopy --srec-forceS3 --output-target srec debug/e_helloWorld4.elf debug/helloWorld4.srec
