@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "e_lib.h"
+#include "e-lib.h"
 
 #define NUM_CORES 4
 #define ptr_adr_mycore 0x3500

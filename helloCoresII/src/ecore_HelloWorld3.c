@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-#include "e_lib.h"
+#include "e-lib.h"
 
 char *outbuffer;
 

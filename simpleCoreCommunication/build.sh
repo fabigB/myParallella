@@ -12,6 +12,7 @@ else
 	CROSS_PREFIX="arm-linux-gnueabihf-"
 fi
 
+mkdir -p debug/
 # Build HOST side application
 ${CROSS_PREFIX}gcc src/host_CoreCom.c -o debug/hostCom.elf -I ${EINCS} -L ${ELIBS} -le-hal -le-loader
 
