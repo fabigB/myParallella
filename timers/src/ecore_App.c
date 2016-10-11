@@ -41,8 +41,8 @@ int main(void) {
 	// Start timer:
 	//timer 0 counts clock ticks
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);		
-	//timer 1 counts FPU instructions
-	e_ctimer_start(E_CTIMER_1,E_CTIMER_FPU_INST);	
+	//timer 1 counts integer ALU instructions
+	e_ctimer_start(E_CTIMER_1,E_CTIMER_IALU_INST);	
 
 	// Do some computation
 	pi1 = pi(5);
@@ -67,11 +67,11 @@ int main(void) {
 
     // Write message:
 	outbuffer = (char *) 0x3000;
-	sprintf(outbuffer, "Calculated pi1: %0.5f in %u clock cylces and used %u FPU instructions",
+	sprintf(outbuffer, "Calculated pi1: %0.5f in %u clock cylces and used %u IALU instructions",
 			pi1, timer0Pi1, timer1Pi1);
 
 	outbuffer = (char *) 0x3100;
-	sprintf(outbuffer, "Calculated pi2: %0.5f in %u clock cylces and used %u FPU instructions", 
+	sprintf(outbuffer, "Calculated pi2: %0.5f in %u clock cylces and used %u IALU instructions", 
 			pi2, timer0Pi2, timer1Pi2);
 
     return 0;

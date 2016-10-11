@@ -17,5 +17,5 @@ runs 4 cores. Each write a number to a local variable with the help of the barri
 runs 4 cores. Each creating a number of local integers first and then writing them to a different core using the DMA copy function.
 
 ## timers:
-runs 1 core. Sets up two timers: one counting clock cycles and the other counting FPU instructions. And then outputting the result. 
+runs 1 core. Sets up two timers: one counting clock cycles and the other counting integer ALU instructions. And then outputting the result. 
 
