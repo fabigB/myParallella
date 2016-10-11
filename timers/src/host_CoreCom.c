@@ -38,7 +38,7 @@ int main()
                 fprintf(stderr,"Error (%i) while loading application to core. \n", feedback);
         }
         // Wait for target to finish:
-        usleep(10000);
+        usleep(100000);
 
 		// Read data of length of the buffer from the work group to local buffer
         e_read(&dev,0,0,0x3000, &message, 256);   

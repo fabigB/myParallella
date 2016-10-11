@@ -52,7 +52,7 @@ int main(void) {
 	timerVal1Interval = e_ctimer_get(E_CTIMER_1);
 
 	// Do some more computation
-	pi2 = pi(10);
+	pi2 = pi(50);
 
 	// Stop timer:
 	timerVal0Stop = e_ctimer_stop(E_CTIMER_0);
@@ -67,11 +67,11 @@ int main(void) {
 
     // Write message:
 	outbuffer = (char *) 0x3000;
-	sprintf(outbuffer, "Calculated pi1: %e in %u clock cylces and used %u FPU instructions",
+	sprintf(outbuffer, "Calculated pi1: %0.5f in %u clock cylces and used %u FPU instructions",
 			pi1, timer0Pi1, timer1Pi1);
 
 	outbuffer = (char *) 0x3100;
-	sprintf(outbuffer, "Calculated pi1: %e in %u clock cylces and used %u FPU instructions", 
+	sprintf(outbuffer, "Calculated pi2: %0.5f in %u clock cylces and used %u FPU instructions", 
 			pi2, timer0Pi2, timer1Pi2);
 
     return 0;
