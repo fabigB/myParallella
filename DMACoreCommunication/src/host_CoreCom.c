@@ -9,6 +9,7 @@ int main()
         unsigned col;
         char message[128];
 		char appNameBuf[32];
+		int intMsg;
 		int adr;
 		int i;
 
@@ -59,9 +60,9 @@ int main()
 			// Read data of length of the buffer from the work group to local buffer
 			for (i=0; i < 10; i++) 
 			{
-		        e_read(&dev,0,col,adr, &message, 128);
+		        e_read(&dev,0,col,adr, &intMsg, 128);
 		        // Print Result for user to see:
-		        fprintf(stderr,"DMA copy message: %d\n", message);
+		        fprintf(stderr,"DMA copy message: %d\n", intMsg);
 				adr += 0x04;
 			}
     	}
