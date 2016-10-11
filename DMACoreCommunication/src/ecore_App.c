@@ -2,7 +2,6 @@
 
 #include "e-lib.h"
 
-#define NUM_CORES 4
 #define ptr_adr_mycore 0x3200
 #define ptr_adr_core1  0x80803500
 #define ptr_adr_core2  0x80903500
@@ -13,11 +12,6 @@ int main(void) {
 	char *outbuffer;
 	int *myX;
 	int i;
-
-	volatile e_barrier_t bar_array[NUM_CORES]; 
-	volatile e_barrier_t *tgt_bar_array[NUM_CORES]; 
-
-    e_barrier_init(bar_array,tgt_bar_array);
 
     // Variable deceleration for the core id
     e_coreid_t coreid;
