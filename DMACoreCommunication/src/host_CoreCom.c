@@ -57,7 +57,7 @@ int main()
 			adr = 0x3500;
 			//Intro message:
 		    e_read(&dev,0,col,0x3000, &message, 128);
-			fprintf(stderr,"Core row: 0, col:%i sends: %s\n", col, message);
+			fprintf(stderr,"Core %i sends: %s\n", col+1, message);
 			// Read data of length of the buffer from the work group to local buffer
 			for (i=0; i < 10; i++) 
 			{
