@@ -12,6 +12,7 @@ int main()
 		int intMsg;
 		int adr;
 		int i;
+		int srcCore;
 
         /*********Epiphany var declaration***********/
         // Epiphany platform information:
@@ -62,7 +63,9 @@ int main()
 			{
 		        e_read(&dev,0,col,adr, &intMsg, sizeof(int));
 		        // Print Result for user to see:
-		        fprintf(stderr,"DMA copy message: %d\n", intMsg);
+				if (col == 0)	srcCore = 4; 
+				else 			srcCore = col;
+		        fprintf(stderr,"DMA copy read from core %i written there by %i: %d\n",col+1,srcCore, intMsg);
 				adr += 0x04;
 			}
     	}
