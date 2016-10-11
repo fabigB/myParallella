@@ -24,9 +24,9 @@ int main(void) {
     coreid = e_get_coreid();
 
 	// Do calculation with x:
+	myX = (int *) ptr_adr_mycore;	
 	for (i = 0; i < 10; i++)
 	{
-		myX = (int *) ptr_adr_mycore;
 		if 		(coreid == 0x808) *myX = i;
 		else if (coreid == 0x809) *myX = i+10;
 		else if (coreid == 0x80A) *myX = i+20;
