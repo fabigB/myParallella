@@ -43,7 +43,7 @@ int main(void) {
 
     // Write message:
 	outbuffer = (char *) 0x3000;
-	sprintf(outbuffer, "Created 10 elements from 0x%x and used DMA to copy", coreid);
+	sprintf(outbuffer, "Created 10 elements from 0x%x and used DMA to copy. Last x: %i", coreid, *myX);
     return 0;
 }
 

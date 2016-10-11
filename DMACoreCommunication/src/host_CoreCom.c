@@ -60,7 +60,7 @@ int main()
 			// Read data of length of the buffer from the work group to local buffer
 			for (i=0; i < 10; i++) 
 			{
-		        e_read(&dev,0,col,adr, &intMsg, 128);
+		        e_read(&dev,0,col,adr, &intMsg, sizeof(int));
 		        // Print Result for user to see:
 		        fprintf(stderr,"DMA copy message: %d\n", intMsg);
 				adr += 0x04;
