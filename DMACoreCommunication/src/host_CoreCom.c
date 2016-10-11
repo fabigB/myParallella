@@ -51,8 +51,8 @@ int main()
 
         for(col=0; col <4; col++)
         {	
-			//DMA copied everthing to the local adress 0x3200 of each processor			
-			adr = 0x3200;
+			//DMA copied everthing to the local adress 0x3500 of each processor			
+			adr = 0x3500;
 			//Intro message:
 		    e_read(&dev,0,col,0x3000, &message, 128);
 			fprintf(stderr,"Core row: 0, col:%i sends: %s\n", col, message);
@@ -61,7 +61,7 @@ int main()
 			{
 		        e_read(&dev,0,col,adr, &message, 128);
 		        // Print Result for user to see:
-		        fprintf(stderr,"DMA copy message: %s\n", message);
+		        fprintf(stderr,"DMA copy message: %d\n", message);
 				adr += 0x04;
 			}
     	}

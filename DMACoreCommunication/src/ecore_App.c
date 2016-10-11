@@ -31,15 +31,15 @@ int main(void) {
 		else if (coreid == 0x809) *myX = i+10;
 		else if (coreid == 0x80A) *myX = i+20;
 		else 					  *myX = i+30;
-		myX += 1;
+		myX = myX + 1;
 	}		
 	
 	// Copy from mycore to different core
 	// Size of int: 4 Bytes. * 10
-	if 		(coreid == 0x808) e_dma_copy((int *)ptr_adr_core2,(int *)ptr_adr_mycore,40);
-	else if (coreid == 0x809) e_dma_copy((int *)ptr_adr_core3,(int *)ptr_adr_mycore,40);
-	else if (coreid == 0x80A) e_dma_copy((int *)ptr_adr_core4,(int *)ptr_adr_mycore,40);
-	else 					  e_dma_copy((int *)ptr_adr_core1,(int *)ptr_adr_mycore,40);
+	if 		(coreid == 0x808) e_dma_copy((unsigned int *)ptr_adr_core2,(unsigned int *)ptr_adr_mycore,1024);
+	else if (coreid == 0x809) e_dma_copy((unsigned int *)ptr_adr_core3,(unsigned int *)ptr_adr_mycore,1024);
+	else if (coreid == 0x80A) e_dma_copy((unsigned int *)ptr_adr_core4,(unsigned int *)ptr_adr_mycore,1024);
+	else 					  e_dma_copy((unsigned int *)ptr_adr_core1,(unsigned int *)ptr_adr_mycore,1024);
 
     // Write message:
 	outbuffer = (char *) 0x3000;
