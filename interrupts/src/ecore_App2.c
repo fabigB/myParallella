@@ -24,6 +24,7 @@ int main(void) {
 	int x = 0;
 	int i = 1;
 
+	e_irq_attach(E_MESSAGE_INT, stop_isr);
 	//Interrupts of type E_Timer0 are not masked
 	e_irq_mask(E_MESSAGE_INT, E_FALSE);
 	//Globally enable interrupts on caller core
