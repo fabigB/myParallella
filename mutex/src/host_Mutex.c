@@ -49,7 +49,7 @@ int main()
         
 		// Read data of length of the buffer from the work group to local buffer
 		e_read(&dev,0,0, 0x3500, &intMsg, sizeof(int));
-		fprintf(stderr,"X is supposed to be 16 and it is...%i\n", intMsg);
+		fprintf(stderr,"X is supposed to be 3*16 and it is...%i\n", intMsg);
 
 		// Close work group and free allocated resources. 
         e_close(&dev);

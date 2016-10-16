@@ -18,6 +18,14 @@ int main(void) {
 	*x = *x+1;
 	e_mutex_unlock(0,0,&mutex);
 
+	e_mutex_lock(0,0,&mutex);
+	*x = *x+1;
+	e_mutex_unlock(0,0,&mutex);
+
+	e_mutex_lock(0,0,&mutex);
+	*x = *x+1;
+	e_mutex_unlock(0,0,&mutex);
+
 
     return 0;
 }
