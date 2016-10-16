@@ -22,4 +22,7 @@ runs 1 core. Sets up two timers: one counting clock cycles and the other countin
 ## interrupt:
 runs 1 core. A timer triggers an interrupt.
 
+## mutex:
+runs 16 cores all incrementing ten times a shared variable x. The use of mutexes ensures that the increment is done atomic so that the expected result: 160 is produced. 
+
 
