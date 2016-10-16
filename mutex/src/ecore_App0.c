@@ -11,6 +11,9 @@ int main(void) {
 	x = (int *) ptr_adr_X;
 	e_mutex_t    mutex; // group lock mutex
 
+	*x=0;		
+	e_mutex_init(0,0,&mutex,NULL);
+
 	e_mutex_lock(0,0,&mutex);
 	*x = *x+1;
 	e_mutex_unlock(0,0,&mutex);

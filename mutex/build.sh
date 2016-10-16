@@ -18,3 +18,4 @@ ${CROSS_PREFIX}gcc src/host_Mutex.c -o debug/hostMutex.elf -I ${EINCS} -L ${ELIB
 
 # Build DEVICE side program
 e-gcc -T ${ELDF} src/ecore_App.c -o debug/e_App.elf -le-lib
+e-gcc -T ${ELDF} src/ecore_App0.c -o debug/e_App0.elf -le-lib
