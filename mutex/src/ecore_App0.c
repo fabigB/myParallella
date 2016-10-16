@@ -14,22 +14,22 @@ int main(void) {
 	mutex = (void *)mutex_adr;
 
 	*x=0;		
-	e_mutex_init(0,0,&mutex,MUTEXATTR_NULL);
+	e_mutex_init(0,0,mutex,MUTEXATTR_NULL);
 
-	e_mutex_lock(0,0,&mutex);
+	e_mutex_lock(0,0,mutex);
 	x = (int *) ptr_adr_X;	
 	*x = *x+1;
-	e_mutex_unlock(0,0,&mutex);
+	e_mutex_unlock(0,0,mutex);
 
-	e_mutex_lock(0,0,&mutex);
+	e_mutex_lock(0,0,mutex);
 	x = (int *) ptr_adr_X;	
 	*x = *x+1;
-	e_mutex_unlock(0,0,&mutex);
+	e_mutex_unlock(0,0,mutex);
 
-	e_mutex_lock(0,0,&mutex);
+	e_mutex_lock(0,0,mutex);
 	x = (int *) ptr_adr_X;		
 	*x = *x+1;
-	e_mutex_unlock(0,0,&mutex);
+	e_mutex_unlock(0,0,mutex);
 
 
     return 0;
