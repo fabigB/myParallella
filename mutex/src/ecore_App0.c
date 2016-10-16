@@ -10,7 +10,7 @@ int main(void) {
 
 	int *x;
 	x = (int *) ptr_adr_X;
-	e_mutex_t    mutex; // group lock mutex
+	e_mutex_t *mutex;
 	mutex = (void *)mutex_adr;
 
 	*x=0;		
