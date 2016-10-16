@@ -14,7 +14,7 @@ fi
 
 mkdir -p debug/
 # Build HOST side application
-${CROSS_PREFIX}gcc src/host_CoreCom.c -o debug/hostCom.elf -I ${EINCS} -L ${ELIBS} -le-hal -le-loader
+${CROSS_PREFIX}gcc src/host_Timer.c -o debug/hostTimer.elf -I ${EINCS} -L ${ELIBS} -le-hal -le-loader
 
 # Build DEVICE side program
 e-gcc -T ${ELDF} src/ecore_App.c -o debug/e_App.elf -le-lib
