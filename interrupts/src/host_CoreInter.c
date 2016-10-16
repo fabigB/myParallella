@@ -24,19 +24,14 @@ int main()
         // Get platform specific configuration, number of devices, external memory, ...
         e_get_platform_info(&epiphany_config);
 
-		// Define a single core work group (size 1x2)
-		e_open(&dev,0,0,1,2);
+		// Define a single core work group (size 1x1)
+		e_open(&dev,0,0,1,1);
 		// Perform soft reset of the created work group
 		e_reset_group(&dev);
 
 		// Load an Epiphany program onto the work group
 		// Row and column parameters are relative to work group. Hence 0,0. 
 		feedback = e_load("e_App1.elf",&dev,0,0,E_FALSE);
-        if (feedback != E_OK)
-        {
-                fprintf(stderr,"Error (%i) while loading application to core. \n", feedback);
-        }
-		feedback = e_load("e_App2.elf",&dev,0,1,E_FALSE);
         if (feedback != E_OK)
         {
                 fprintf(stderr,"Error (%i) while loading application to core. \n", feedback);
@@ -49,9 +44,7 @@ int main()
         e_read(&dev,0,0,0x3000, &message, 128);   
         fprintf(stderr,"Core 0 sends: %s\n", message);  
         e_read(&dev,0,0,0x3100, &message, 128);   
-        fprintf(stderr,"Core 0 sends: %s\n", message); 
-        e_read(&dev,0,1,0x3000, &message, 128);   
-        fprintf(stderr,"Core 1 sends: %s\n", message);     
+        fprintf(stderr,"Core 0 sends: %s\n", message);   
 
 		// Close work group and free allocated resources. 
         e_close(&dev);

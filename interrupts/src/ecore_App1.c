@@ -9,10 +9,7 @@ void __attribute__((interrupt)) endOfTimer_isr() {
 	char *outbuffer;
 	outbuffer = (char *) 0x3100;
 
-	//Set an interrupt on the core 0,1 in the workgroup. 		
-	e_irq_set(0,1,E_MESSAGE_INT);
-
-	sprintf(outbuffer, "In ISR: Setting interrupt to core 0,1");
+	sprintf(outbuffer, "ISR was called.");
 			
 	return;
 }
@@ -38,7 +35,6 @@ int main(void) {
 	// Write message:
 	outbuffer = (char *) 0x3000;
 	sprintf(outbuffer, "Done Interrupting");
-
 
     return 0;
 }
