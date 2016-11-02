@@ -3,7 +3,7 @@
 #include "e-lib.h"
 
 #define PICPART 6336 // 352x288 = 101376 --> /16
-#define PIC_START 0x3500
+#define PIC_START 0x3000
 
 int main(void) {
 

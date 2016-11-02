@@ -3,8 +3,8 @@
 #include "e-hal.h"
 
 #define FIRSTLINE_SIZE 15
-#define PIXEL_SIZE 4	//Maximum 255 --> 3 (but 16 for the first lines)
-#define PICPART 2//6336 // 352x288 = 101376 --> /16
+#define PICPART 6336 // 352x288 = 101376 --> /16
+#define PIC_START 0x3000
 
 int main()
 {
@@ -12,10 +12,10 @@ int main()
         unsigned col, row;
 		int pixel, counter, firstLines;
 		char bufFirstLines[FIRSTLINE_SIZE];
-		char bufLine[PIXEL_SIZE];
 		char * line = NULL;
 		size_t len = 0;
-		int bufPic[PICPART];
+		int bufInPic[PICPART];
+		int bufResultPic[PICPART];
 		FILE *file;
 		size_t nread;
 
@@ -62,12 +62,11 @@ int main()
 					pixel = (line[0]-'0') * 10 + line[1]-'0';		
 				else	
 					pixel = line[0]-'0';
-				bufPic[counter] = pixel;
-				fprintf(stderr,"Last Pixel was:%i in chars: %s",pixel,line);
+				bufInPic[counter] = pixel;
 				counter += 1;
 				if (counter == PICPART)	{
 					//Write to epiphany memory:
-					e_write(&dev,row,col, 0x3500, &bufPic, sizeof(bufPic));
+					e_write(&dev,row,col, PIC_START, &bufInPic, sizeof(bufInPic));
 					fprintf(stderr,"Wrote to %i,%i\n",row,col);
 					row+=1;
 					if (row == 4) {
@@ -95,13 +94,14 @@ int main()
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					e_read(&dev,row,col, 0x3500, &bufPic, sizeof(bufPic));
+					e_read(&dev,row,col, PIC_START, &bufResultPic, sizeof(bufResultPic));
 					for(counter=0; counter < PICPART; counter++) {			
-						fprintf(file, "%i\n", bufPic[counter]);
+						fprintf(file, "%i\n", bufResultPic[counter]);
 					}
 				}
 			}
 			fclose(file);
+			fprintf(stderr,"Wrote result picture");
 		}
 
 
