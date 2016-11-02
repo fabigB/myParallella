@@ -56,10 +56,12 @@ int main()
 			fprintf(stderr,"Read first Lines:\n%s",bufFirstLines);
 		
 			while ((nread = getline(&line, &len, file)) != -1) {
-				if(len >= 4) pixel = (line[0]-'0') * 100 + (line[1]-'0') * 10 + line[2]-'0';
-				else if (len >= 3) pixel = (line[0]-'0') * 10 + line[1]-'0';
-				else if (len >= 2) pixel = line[0]-'0';
-				else fprintf(stderr,"empty line at %i\n",counter);
+				if(line[2] >= '0' && line[2] <= '9')
+					pixel = (line[0]-'0') * 100 + (line[1]-'0') * 10 + line[2]-'0'; 
+				else if ( line[1] >= '0' && line[1] <= '9')		
+					pixel = (line[0]-'0') * 10 + line[1]-'0';		
+				else	
+					pixel = line[0]-'0';
 				bufPic[counter] = pixel;
 				fprintf(stderr,"Last Pixel was:%i in chars: %s",pixel,line);
 				counter += 1;
