@@ -56,9 +56,12 @@ int main()
 			fprintf(stderr,"Read first Lines:\n%s",bufFirstLines);
 		
 			while ((nread = getline(&line, &len, file)) != -1) {
-				pixel = bufLine[0]-'0' * 1 + bufLine[0]-'0' * 10 + bufLine[0]-'0' * 100;
+				if(*len >= 4) pixel = line[0]-'0' * 1 + line[0]-'0' * 10 + line[0]-'0' * 100;
+				else if (*len >= 3) pixel = line[0]-'0' * 1 + line[0]-'0' * 10;
+				else if (*len >= 2) pixel = line[0]-'0' * 1;
+				else fprintf(stderr,"empty line at %i\n",counter);
 				bufPic[counter] = pixel;
-				fprintf(stderr,"Last Pixel was:%i in chars: %s",pixel,bufLine);
+				fprintf(stderr,"Last Pixel was:%i in chars: %s",pixel,line);
 				counter += 1;
 				if (counter == PICPART)	{
 					//Write to epiphany memory:
