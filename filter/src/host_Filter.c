@@ -76,15 +76,17 @@ int main()
 					counter = 0;
 				}
 			}
+			fprintf(stderr,"Finished Setup\n");	
 			fclose(file);
 		}
 		
-
+		fprintf(stderr,"Starting groups\n");
 		// Start the group:				
 		e_start_group(&dev);
         // Wait for targets to finish:
-        usleep(100000);
+        usleep(10000);
 		
+		fprintf(stderr,"Reading from groups\n");
 		// Write result:
 		file = fopen("picResult.pgm", "w");
 		if (file) {
@@ -101,8 +103,9 @@ int main()
 				}
 			}
 			fclose(file);
-			fprintf(stderr,"Wrote result picture");
+			fprintf(stderr,"Wrote result picture\n");
 		}
+		else fprintf(stderr,"Failed to open result picture\n");
 
 
 
