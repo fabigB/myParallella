@@ -60,7 +60,7 @@ int main()
 				if (counter == PICPART)	{
 					//Write to epiphany memory:
 					e_write(&dev,row,col, 0x3500, &bufPic, sizeof(bufPic));
-					fprintf(stderr,"Wrote to %i,%i. Last Pixel was:%i", row, col,pixel);
+					fprintf(stderr,"Wrote to %i,%i. Last Pixel was:%i in chars: %s", row, col,pixel,bufLine);
 					row+=1;
 					if (row == 4) {
 						row = 0;
