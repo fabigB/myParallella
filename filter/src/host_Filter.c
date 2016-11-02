@@ -13,6 +13,8 @@ int main()
 		int pixel, counter, firstLines;
 		char bufFirstLines[FIRSTLINE_SIZE];
 		char bufLine[PIXEL_SIZE];
+		char * line = NULL;
+		size_t len = 0;
 		int bufPic[PICPART];
 		FILE *file;
 		size_t nread;
@@ -52,8 +54,8 @@ int main()
 		if (file) {
 			nread = fread(bufFirstLines, 1, sizeof(bufFirstLines), file);
 			fprintf(stderr,"Read first Lines:\n%s",bufFirstLines);
-
-			while ((nread = fread(bufLine, 1, sizeof(bufLine), file)) > 0) {
+		
+			while ((nread = getline(&line, &len, file)) != -1) {
 				pixel = bufLine[0]-'0' * 1 + bufLine[0]-'0' * 10 + bufLine[0]-'0' * 100;
 				bufPic[counter] = pixel;
 				fprintf(stderr,"Last Pixel was:%i in chars: %s",pixel,bufLine);
