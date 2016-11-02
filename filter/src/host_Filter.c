@@ -2,7 +2,7 @@
 
 #include "e-hal.h"
 
-#define PIX2 4	//Maximum 255 --> 3 (+1 for new line)
+#define READLINE_SIZE 16	//Maximum 255 --> 3 (but 16 for the first lines)
 #define PICPART 2//6336 // 352x288 = 101376 --> /16
 
 int main()
@@ -10,7 +10,7 @@ int main()
         /************Variable declaration*************/
         unsigned col, row;
 		int pixel, counter, firstLines;
-		char bufLine[3];
+		char bufLine[READLINE_SIZE];
 		int bufPic[PICPART];
 		FILE *file;
 		size_t nread;
