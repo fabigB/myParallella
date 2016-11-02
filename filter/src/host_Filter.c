@@ -2,8 +2,8 @@
 
 #include "e-hal.h"
 
-#define PIX2 3	//Maximum 255
-#define PICPART 6336 // 352x288 = 101376 --> /16
+#define PIX2 4	//Maximum 255 --> 3 (+1 for new line)
+#define PICPART 2//6336 // 352x288 = 101376 --> /16
 
 int main()
 {
@@ -56,11 +56,12 @@ int main()
 				}
 				pixel = bufLine[0]-'0' * 1 + bufLine[0]-'0' * 10 + bufLine[0]-'0' * 100;
 				bufPic[counter] = pixel;
+				fprintf(stderr,"Last Pixel was:%i in chars: %s",pixel,bufLine);
 				counter += 1;
 				if (counter == PICPART)	{
 					//Write to epiphany memory:
 					e_write(&dev,row,col, 0x3500, &bufPic, sizeof(bufPic));
-					fprintf(stderr,"Wrote to %i,%i. Last Pixel was:%i in chars: %s", row, col,pixel,bufLine);
+					fprintf(stderr,"Wrote to %i,%i\n",row,col);
 					row+=1;
 					if (row == 4) {
 						row = 0;
