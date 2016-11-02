@@ -2,7 +2,8 @@
 
 #include "e-hal.h"
 
-#define READLINE_SIZE 16	//Maximum 255 --> 3 (but 16 for the first lines)
+#define FIRSTLINE_SIZE 15
+#define PIXEL_SIZE 4	//Maximum 255 --> 3 (but 16 for the first lines)
 #define PICPART 2//6336 // 352x288 = 101376 --> /16
 
 int main()
@@ -10,7 +11,8 @@ int main()
         /************Variable declaration*************/
         unsigned col, row;
 		int pixel, counter, firstLines;
-		char bufLine[READLINE_SIZE];
+		char bufFirstLines[FIRSTLINE_SIZE];
+		char bufLine[PIXEL_SIZE];
 		int bufPic[PICPART];
 		FILE *file;
 		size_t nread;
@@ -48,12 +50,10 @@ int main()
 		file = fopen("../src/picIn.pgm", "r");
 		counter = 0; row = 0; col = 0; firstLines = 0;
 		if (file) {
+			nread = fread(bufFirstLines, 1, sizeof(bufFirstLines), file);
+			fprintf(stderr,"Read first Lines:\n%s",bufFirstLines);
+
 			while ((nread = fread(bufLine, 1, sizeof(bufLine), file)) > 0) {
-				if(firstLines < 3) {
-					//ignore first three lines					
-					firstLines++;					
-					continue;
-				}
 				pixel = bufLine[0]-'0' * 1 + bufLine[0]-'0' * 10 + bufLine[0]-'0' * 100;
 				bufPic[counter] = pixel;
 				fprintf(stderr,"Last Pixel was:%i in chars: %s",pixel,bufLine);
