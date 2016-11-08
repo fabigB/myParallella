@@ -20,7 +20,7 @@ int main()
 		int bufResultPicII[PICPART/2];
 		FILE *file;
 		size_t nread;
-        char message[256];
+        char message[32];
 
         /*********Epiphany var declaration***********/
         // Epiphany platform information:
@@ -100,7 +100,7 @@ int main()
 		fprintf(stderr,"Reading from groups\n");
 		// Read time it took:
 		e_read(&dev,0,0, 0x2900, &message, sizeof(message));
-        fprintf(stderr,"Core 0 sends: %s\n", message);  
+        fprintf(stderr,"Core 0 sends:%s\n", message);  
 		// Write result:
 		file = fopen("../picResult.pgm", "w");
 		if (file) {
