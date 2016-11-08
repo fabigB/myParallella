@@ -3,9 +3,12 @@
 #include "e-hal.h"
 
 #define FIRSTLINE_SIZE 15
-#define PICPART 4096 // 256x256 = 65536 --> /16 = 4096
-#define PIC_START 0x3000
-
+#define PICSIZE 65536 // 256x256
+#define PICPART 4096 //  65536 /16 = 4096
+#define PIC_START 3000
+#define BUFFEROFFSET (0x01000000)
+//The offset for e_alloc will be an offset from 0x8e000000:
+//	Offset of 0x01000000 --> 0x8e000000 + 0x01000000 = 0x8f000000 (shared_dram)
 int main()
 {
         /************Variable declaration*************/
@@ -15,12 +18,15 @@ int main()
 		char bufFirstLines[FIRSTLINE_SIZE];
 		char * line = NULL;
 		size_t len = 0;
-		int bufInPic[PICPART/2];
+		int bufInPic[PICSIZE];
 		int bufResultPicI[PICPART/2];
 		int bufResultPicII[PICPART/2];
 		FILE *file;
 		size_t nread;
-        char message[32];
+		// Core message:
+        char message[32];        
+		// external memory buffer data:
+        e_mem_t	mBuf;
 
         /*********Epiphany var declaration***********/
         // Epiphany platform information:
@@ -37,6 +43,10 @@ int main()
         e_reset_system();
         // Get platform specific configuration, number of devices, external memory, ...
         e_get_platform_info(&epiphany_config);
+
+
+        // Allocate shared memory:
+		e_alloc(&mBuf, BUFFEROFFSET, PICSIZE);
 
 		// Define a single core work group (size 4x4)
 		e_open(&dev,0,0,4,4);
@@ -55,9 +65,9 @@ int main()
 		file = fopen("../src/picIn.pgm", "r");
 		counter = 0; row = 0; col = 0; firstLines = 0; first = 1;
 		if (file) {
+			//First lines include special information:			
 			nread = fread(bufFirstLines, 1, sizeof(bufFirstLines), file);
-			fprintf(stderr,"Read first Lines:\n%s",bufFirstLines);
-		
+			//Read pixels:
 			while ((nread = getline(&line, &len, file)) != -1) {
 				if(line[2] >= '0' && line[2] <= '9')
 					pixel = (line[0]-'0') * 100 + (line[1]-'0') * 10 + line[2]-'0'; 
@@ -67,11 +77,12 @@ int main()
 					pixel = line[0]-'0';
 				bufInPic[counter] = pixel;
 				counter += 1;
-				if (counter == PICPART/2)	{
+			/*	if (counter == PICPART/2)	{
 					counter = 0;
 					//Write to epiphany memory:
 					if (first == 1) { 
 						e_write(&dev,row,col, PIC_START, &bufInPic, sizeof(bufInPic));
+
 						first = 0; 
 					}
 					else {
@@ -85,8 +96,9 @@ int main()
 						}
 					}
 					
-				}
+				}*/
 			}
+			e_write(&mBuf,0,0,0x0, bufInPic, sizeof(bufInPic));
 			fprintf(stderr,"Finished Setup\n");	
 			fclose(file);
 		}
@@ -101,9 +113,7 @@ int main()
 		// Write result:
 		file = fopen("../picResult.pgm", "w");
 		if (file) {
-			fprintf(file, "P2\n");
-			fprintf(file, "352 288\n");
-			fprintf(file, "255\n");
+			fprintf(file, bufFirstLines);
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
@@ -128,7 +138,8 @@ int main()
 
 		// Close work group and free allocated resources. 
         e_close(&dev);
-        
+        // release resources allocated by e_alloc 
+        e_free(&mBuf);
         // release resources allocated by e_init        
         e_finalize();
 

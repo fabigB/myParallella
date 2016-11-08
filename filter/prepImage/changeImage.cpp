@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <string>  
 
 using namespace std;
 
@@ -19,8 +20,10 @@ vector<string> split(string const &input) {
 
 int main(void) {
 	ofstream outFile;
-  	outFile.open ("picIn.pgm");
-	string line; vector<string> lineVec;
+	outFile.open("picIn.pgm");  	
+	//outFile.open ("picInvert.pgm");
+	string line; 
+	vector<string> lineVec;
 	int counter = 0;
   	ifstream inFile ("in.pgm");
 	if (inFile.is_open()) {
@@ -33,13 +36,14 @@ int main(void) {
 			else {
 				lineVec = split(line);			
 				for(unsigned i=0; i < lineVec.size();i++){
+					//int invert = 255-stoi(lineVec[i]);					
 					outFile << lineVec[i] << endl;
 				}
 			}						
 		}
 		inFile.close();
 	}
-	else cout << "Unable to open file"; 
+	else cout << "Unable to open file" << endl; 
 
 	outFile.close();
 	cout << "Done writing result" << endl;
