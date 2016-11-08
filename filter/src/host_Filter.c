@@ -11,11 +11,13 @@ int main()
         /************Variable declaration*************/
         unsigned col, row;
 		int pixel, counter, firstLines;
+		int first;
 		char bufFirstLines[FIRSTLINE_SIZE];
 		char * line = NULL;
 		size_t len = 0;
-		int bufInPic[PICPART];
-		int bufResultPic[PICPART];
+		int bufInPic[PICPART/2];
+		int bufResultPicI[PICPART/2];
+		int bufResultPicII[PICPART/2];
 		FILE *file;
 		size_t nread;
 
@@ -50,7 +52,7 @@ int main()
 		}
 		// Fill the memory:
 		file = fopen("../src/picIn.pgm", "r");
-		counter = 0; row = 0; col = 0; firstLines = 0;
+		counter = 0; row = 0; col = 0; firstLines = 0; first = 1;
 		if (file) {
 			nread = fread(bufFirstLines, 1, sizeof(bufFirstLines), file);
 			fprintf(stderr,"Read first Lines:\n%s",bufFirstLines);
@@ -65,15 +67,23 @@ int main()
 				bufInPic[counter] = pixel;
 				counter += 1;
 				if (counter == PICPART/2)	{
-					//Write to epiphany memory:
-					e_write(&dev,row,col, PIC_START, &bufInPic, sizeof(bufInPic));
-					fprintf(stderr,"Wrote to %i,%i\n",row,col);
-					row+=1;
-					if (row == 4) {
-						row = 0;
-						col+= 1;
-					}
 					counter = 0;
+					//Write to epiphany memory:
+					if (first == 1) { 
+						e_write(&dev,row,col, PIC_START, &bufInPic, sizeof(bufInPic));
+						first = 0; 
+					}
+					else {
+						e_write(&dev,row,col, PIC_START+PICPART/2, &bufInPic, sizeof(bufInPic));
+						fprintf(stderr,"Wrote to %i,%i\n",row,col);
+						row+=1;
+						first = 1;
+						if (row == 4) {
+							row = 0;
+							col+= 1;
+						}
+					}
+					
 				}
 			}
 			fprintf(stderr,"Finished Setup\n");	
@@ -96,9 +106,13 @@ int main()
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					e_read(&dev,row,col, PIC_START, &bufResultPic, sizeof(bufResultPic));
+					e_read(&dev,row,col, PIC_START, &bufResultPicI, sizeof(bufResultPicI));
 					for(counter=0; counter < PICPART/2; counter++) {			
-						fprintf(file, "%i\n", bufResultPic[counter]);
+						fprintf(file, "%i\n", bufResultPicI[counter]);
+					}
+					e_read(&dev,row,col, PIC_START, &bufResultPicII, sizeof(bufResultPicII));
+					for(counter=PICPART/2; counter < PICPART; counter++) {			
+						fprintf(file, "%i\n", bufResultPicII[counter]);
 					}
 				}
 			}
