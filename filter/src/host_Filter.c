@@ -25,8 +25,7 @@ int main()
 		// Core message:
         char message[32];        
 		// external memory buffer data:
-        e_mem_t	mBuf1, mBuf2, mBuf3, mBuf4, mBuf5, mBuf6, mBuf7, mBuf8;
-		e_mem_t mBuf9, mBuf10, mBuf11, mBuf12, mBuf13, mBuf14, mBuf15, mBuf16;
+        e_mem_t	mBuf;
 
         /*********Epiphany var declaration***********/
         // Epiphany platform information:
@@ -46,22 +45,7 @@ int main()
 
 
         // Allocate shared memory:
-		e_alloc(&mBuf1, BUFFEROFFSET,PICPART);
-		e_alloc(&mBuf2, BUFFEROFFSET+PICPART*1, PICPART);
-		e_alloc(&mBuf3, BUFFEROFFSET+PICPART*2, PICPART);
-		e_alloc(&mBuf4, BUFFEROFFSET+PICPART*3, PICPART);
-		e_alloc(&mBuf5, BUFFEROFFSET+PICPART*4, PICPART);
-		e_alloc(&mBuf6, BUFFEROFFSET+PICPART*5, PICPART);
-		e_alloc(&mBuf7, BUFFEROFFSET+PICPART*6, PICPART);
-		e_alloc(&mBuf8, BUFFEROFFSET+PICPART*7, PICPART);
-		e_alloc(&mBuf9, BUFFEROFFSET+PICPART*8, PICPART);
-		e_alloc(&mBuf10, BUFFEROFFSET+PICPART*9, PICPART);
-		e_alloc(&mBuf11, BUFFEROFFSET+PICPART*10, PICPART);
-		e_alloc(&mBuf12, BUFFEROFFSET+PICPART*11, PICPART);
-		e_alloc(&mBuf13, BUFFEROFFSET+PICPART*12, PICPART);
-		e_alloc(&mBuf14, BUFFEROFFSET+PICPART*13, PICPART);
-		e_alloc(&mBuf15, BUFFEROFFSET+PICPART*14, PICPART);
-		e_alloc(&mBuf16, BUFFEROFFSET+PICPART*15, PICPART);
+		e_alloc(&mBuf, BUFFEROFFSET, PICSIZE);
 
 		// Define a single core work group (size 4x4)
 		e_open(&dev,0,0,4,4);
@@ -95,41 +79,7 @@ int main()
 				if (counter == PICPART)	{
 					counter = 0;
 					//Write to epiphany memory:
-					switch(memOffsetCount) {
-						case 0:		e_write(&mBuf1,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 1:		e_write(&mBuf2,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 2:		e_write(&mBuf3,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 3:		e_write(&mBuf4,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 4:		e_write(&mBuf5,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 5:		e_write(&mBuf6,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 6:		e_write(&mBuf7,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 7:		e_write(&mBuf8,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 8:		e_write(&mBuf9,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 9:		e_write(&mBuf10,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 10:	e_write(&mBuf11,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 11:	e_write(&mBuf12,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 12:	e_write(&mBuf13,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 13:	e_write(&mBuf14,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 14:	e_write(&mBuf15,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						case 15:	e_write(&mBuf16,0,0,0x00, &bufInPic, sizeof(bufInPic));
-									break;
-						default:	break;
-					}
+					e_write(&mBuf,0,0, PICPART*memOffsetCount, &bufInPic, sizeof(bufInPic));
 					fprintf(stderr,"Wrote to %i\n",PICPART*memOffsetCount);
 					memOffsetCount+=1;						
 				}
@@ -153,41 +103,7 @@ int main()
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					switch(memOffsetCount) {
-						case 0:		e_read(&mBuf1,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 1:		e_read(&mBuf2,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 2:		e_read(&mBuf3,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 3:		e_read(&mBuf4,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 4:		e_read(&mBuf5,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 5:		e_read(&mBuf6,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 6:		e_read(&mBuf7,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 7:		e_read(&mBuf8,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 8:		e_read(&mBuf9,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 9:		e_read(&mBuf10,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 10:	e_read(&mBuf11,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 11:	e_read(&mBuf12,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 12:	e_read(&mBuf13,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 13:	e_read(&mBuf14,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 14:	e_read(&mBuf15,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						case 15:	e_read(&mBuf16,0,0,0x00, &bufResultPic, sizeof(bufResultPic));
-									break;
-						default:	break;
-					}					
+					e_read(&mBuf,0,0, PICPART*memOffsetCount, &bufResultPic, sizeof(bufResultPic));
 					for(counter=0; counter < PICPART; counter++) {			
 						fprintf(file, "%i\n", bufResultPic[counter]);
 					}
@@ -206,10 +122,7 @@ int main()
 		// Close work group and free allocated resources. 
         e_close(&dev);
         // release resources allocated by e_alloc 
-        e_free(&mBuf1); e_free(&mBuf2); e_free(&mBuf3); e_free(&mBuf4);
-		e_free(&mBuf5); e_free(&mBuf6); e_free(&mBuf7); e_free(&mBuf8);
-		e_free(&mBuf9); e_free(&mBuf10); e_free(&mBuf11); e_free(&mBuf12);
-		e_free(&mBuf13); e_free(&mBuf14); e_free(&mBuf15); e_free(&mBuf16);
+        e_free(&mBuf);
         // release resources allocated by e_init        
         e_finalize();
 
