@@ -11,7 +11,7 @@ int main(void) {
 	int i;
 
 	//Simply invert
-	for ( i = 0; i < PICPART; i++) {
+	for ( i = 0; i < PICPART/2; i++) {
 		x = (int *) PIC_START + i;
 		*x = 255-*x;
 	}

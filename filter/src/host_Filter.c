@@ -64,7 +64,7 @@ int main()
 					pixel = line[0]-'0';
 				bufInPic[counter] = pixel;
 				counter += 1;
-				if (counter == PICPART)	{
+				if (counter == PICPART/2)	{
 					//Write to epiphany memory:
 					e_write(&dev,row,col, PIC_START, &bufInPic, sizeof(bufInPic));
 					fprintf(stderr,"Wrote to %i,%i\n",row,col);
@@ -97,7 +97,7 @@ int main()
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
 					e_read(&dev,row,col, PIC_START, &bufResultPic, sizeof(bufResultPic));
-					for(counter=0; counter < PICPART; counter++) {			
+					for(counter=0; counter < PICPART/2; counter++) {			
 						fprintf(file, "%i\n", bufResultPic[counter]);
 					}
 				}
