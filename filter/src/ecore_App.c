@@ -36,15 +36,17 @@ int main(void) {
 		*x = 255-*x;
 	}
 
-	//Meet all at the barrier
-	e_barrier(bar_array,tgt_bar_array);
-
 	if (coreid == 0x808) {
 		// Stop timer:
 		timerVal0Stop = e_ctimer_stop(E_CTIMER_0);
-		outbuffer = (char *) 0x4900;
-		sprintf(outbuffer, "Filter done in %u clock cylces",timerVal0Stop);
+		outbuffer = (char *) 0x2900;
+		sprintf(outbuffer, "Done in: %u clk cylces",timerVal0Stop);
 	}
+
+	//Meet all at the barrier
+	e_barrier(bar_array,tgt_bar_array);
+
+
 
     return 0;
 }

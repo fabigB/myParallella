@@ -99,7 +99,8 @@ int main()
 		
 		fprintf(stderr,"Reading from groups\n");
 		// Read time it took:
-		e_read(&dev,0,0, 0x4900, &message, sizeof(message));
+		e_read(&dev,0,0, 0x2900, &message, sizeof(message));
+        fprintf(stderr,"Core 0 sends: %s\n", message);  
 		// Write result:
 		file = fopen("../picResult.pgm", "w");
 		if (file) {
