@@ -18,7 +18,7 @@ int main()
 		char bufFirstLines[FIRSTLINE_SIZE];
 		char * line = NULL;
 		size_t len = 0;
-		int bufInPic[PICSIZE];
+		int bufInPic[PICPART/2];
 		int bufResultPicI[PICPART/2];
 		int bufResultPicII[PICPART/2];
 		FILE *file;
@@ -77,16 +77,16 @@ int main()
 					pixel = line[0]-'0';
 				bufInPic[counter] = pixel;
 				counter += 1;
-			/*	if (counter == PICPART/2)	{
+				if (counter == PICPART/2)	{
 					counter = 0;
 					//Write to epiphany memory:
 					if (first == 1) { 
-						e_write(&dev,row,col, PIC_START, &bufInPic, sizeof(bufInPic));
+						e_write(&mBuf,row,col, PICPART*(row+col), &bufInPic, sizeof(bufInPic));
 
 						first = 0; 
 					}
 					else {
-						e_write(&dev,row,col, PIC_START+PICPART/2, &bufInPic, sizeof(bufInPic));
+						e_write(&mBuf,row,col, PICPART*(row+col)+PICPART/2, &bufInPic, sizeof(bufInPic));
 						fprintf(stderr,"Wrote to %i,%i\n",row,col);
 						row+=1;
 						first = 1;
@@ -96,7 +96,7 @@ int main()
 						}
 					}
 					
-				}*/
+				}
 			}
 			e_write(&mBuf,0,0,0x0, bufInPic, sizeof(bufInPic));
 			fprintf(stderr,"Finished Setup\n");	
@@ -117,11 +117,11 @@ int main()
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					e_read(&dev,row,col, PIC_START, &bufResultPicI, sizeof(bufResultPicI));
+					e_read(&mBuf,row,col, PICPART*(row+col), &bufResultPicI, sizeof(bufResultPicI));
 					for(counter=0; counter < PICPART/2; counter++) {			
 						fprintf(file, "%i\n", bufResultPicI[counter]);
 					}
-					e_read(&dev,row,col, PIC_START+PICPART/2, &bufResultPicII, sizeof(bufResultPicII));
+					e_read(&mBuf,row,col, PICPART*(row+col)+PICPART/2, &bufResultPicII, sizeof(bufResultPicII));
 					for(counter=0; counter < PICPART/2; counter++) {	
 						fprintf(file, "%i\n", bufResultPicII[counter]);
 					}
