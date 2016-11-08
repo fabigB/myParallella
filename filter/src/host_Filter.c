@@ -5,7 +5,7 @@
 #define FIRSTLINE_SIZE 15
 #define PICSIZE 65536 // 256x256
 #define PICPART 4096 //  65536 /16 = 4096
-#define PIC_START 3000
+
 #define BUFFEROFFSET (0x01000000)
 //The offset for e_alloc will be an offset from 0x8e000000:
 //	Offset of 0x01000000 --> 0x8e000000 + 0x01000000 = 0x8f000000 (shared_dram)
@@ -13,7 +13,7 @@ int main()
 {
         /************Variable declaration*************/
         unsigned col, row;
-		int pixel, counter, firstLines;
+		int pixel, counter, firstLines, memOffsetCount;
 		int first;
 		char bufFirstLines[FIRSTLINE_SIZE];
 		char * line = NULL;
@@ -63,7 +63,7 @@ int main()
 		}
 		// Fill the memory:
 		file = fopen("../src/picIn.pgm", "r");
-		counter = 0; row = 0; col = 0; firstLines = 0; first = 1;
+		counter = 0; row = 0; col = 0; firstLines = 0; first = 1; memOffsetCount = 0;
 		if (file) {
 			//First lines include special information:			
 			nread = fread(bufFirstLines, 1, sizeof(bufFirstLines), file);
@@ -81,13 +81,14 @@ int main()
 					counter = 0;
 					//Write to epiphany memory:
 					if (first == 1) { 
-						e_write(&mBuf,row,col, PICPART*(row+col), &bufInPic, sizeof(bufInPic));
+						e_write(&mBuf,row,col, PICPART*memOffsetCount, &bufInPic, sizeof(bufInPic));
 
 						first = 0; 
 					}
 					else {
-						e_write(&mBuf,row,col, PICPART*(row+col)+PICPART/2, &bufInPic, sizeof(bufInPic));
+						e_write(&mBuf,row,col, PICPART*memOffsetCount+PICPART/2, &bufInPic, sizeof(bufInPic));
 						fprintf(stderr,"Wrote to %i,%i\n",row,col);
+						memOffsetCount+=1;						
 						row+=1;
 						first = 1;
 						if (row == 4) {
@@ -114,17 +115,19 @@ int main()
 		file = fopen("../picResult.pgm", "w");
 		if (file) {
 			fprintf(file, bufFirstLines);
+			memOffsetCount = 0;
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					e_read(&mBuf,row,col, PICPART*(row+col), &bufResultPicI, sizeof(bufResultPicI));
+					e_read(&mBuf,row,col, PICPART*memOffsetCount, &bufResultPicI, sizeof(bufResultPicI));
 					for(counter=0; counter < PICPART/2; counter++) {			
 						fprintf(file, "%i\n", bufResultPicI[counter]);
 					}
-					e_read(&mBuf,row,col, PICPART*(row+col)+PICPART/2, &bufResultPicII, sizeof(bufResultPicII));
+					e_read(&mBuf,row,col, PICPART*memOffsetCount+PICPART/2, &bufResultPicII, sizeof(bufResultPicII));
 					for(counter=0; counter < PICPART/2; counter++) {	
 						fprintf(file, "%i\n", bufResultPicII[counter]);
 					}
+					memOffsetCount+=1;
 				}
 			}
 			fclose(file);
