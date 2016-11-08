@@ -3,7 +3,7 @@
 #include "e-hal.h"
 
 #define FIRSTLINE_SIZE 15
-#define PICPART 6336 // 352x288 = 101376 --> /16
+#define PICPART 4096 // 256x256 = 65536 --> /16 = 4096
 #define PIC_START 0x3000
 
 int main()

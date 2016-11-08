@@ -3,7 +3,7 @@
 #include "e-lib.h"
 
 #define NUM_CORES 16
-#define PICPART 6336 // 352x288 = 101376 --> /16
+#define PICPART 4096 // 256x256 = 65536 --> /16 = 4096
 #define PIC_START 0x3000
 
 int main(void) {
@@ -36,16 +36,16 @@ int main(void) {
 		*x = 255-*x;
 	}
 
+	//Meet all at the barrier
+	e_barrier(bar_array,tgt_bar_array);
+
+
 	if (coreid == 0x808) {
 		// Stop timer:
 		timerVal0Stop = e_ctimer_stop(E_CTIMER_0);
 		outbuffer = (char *) 0x2000;
-		sprintf(outbuffer, "Done in: %u clk cylces",timerVal0Stop);
+		sprintf(outbuffer, "Done in: %u clk cylces",timerVal0Start-timerVal0Stop);
 	}
-
-	//Meet all at the barrier
-	e_barrier(bar_array,tgt_bar_array);
-
 
 
     return 0;
