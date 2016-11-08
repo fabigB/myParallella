@@ -99,7 +99,7 @@ int main()
 					
 				}
 			}
-			e_write(&mBuf,0,0,0x0, bufInPic, sizeof(bufInPic));
+//			e_write(&mBuf,0,0,0x0, bufInPic, sizeof(bufInPic));
 			fprintf(stderr,"Finished Setup\n");	
 			fclose(file);
 		}
