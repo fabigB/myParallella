@@ -25,7 +25,7 @@ int main()
 		// Core message:
         char message[32];        
 		// external memory buffer data:
-        e_mem_t	mBuf;
+        e_mem_t	mBuf1, mBuf2, mBuf3, mBuf4;
 
         /*********Epiphany var declaration***********/
         // Epiphany platform information:
@@ -45,7 +45,10 @@ int main()
 
 
         // Allocate shared memory:
-		e_alloc(&mBuf, BUFFEROFFSET, PICSIZE);
+		e_alloc(&mBuf1, BUFFEROFFSET, PICSIZE/4);
+		e_alloc(&mBuf2, BUFFEROFFSET+PICSIZE/4, PICSIZE/4);
+		e_alloc(&mBuf3, BUFFEROFFSET+PICSIZE/2, PICSIZE/4);
+		e_alloc(&mBuf4, BUFFEROFFSET+PICSIZE*3/4, PICSIZE/4);
 
 		// Define a single core work group (size 4x4)
 		e_open(&dev,0,0,4,4);
@@ -79,15 +82,12 @@ int main()
 				if (counter == PICPART)	{
 					counter = 0;
 					//Write to epiphany memory:
-					e_write(&mBuf,0,0, PICPART*memOffsetCount, &bufInPic, sizeof(bufInPic));
+					if(memOffsetCount < 4) 				e_write(&mBuf1,0,0, PICPART*(memOffsetCount-0), &bufInPic, sizeof(bufInPic));
+					else if (memOffsetCount >= 4 < 8)	e_write(&mBuf2,0,0, PICPART*(memOffsetCount-4), &bufInPic, sizeof(bufInPic));
+					else if (memOffsetCount >= 8 < 12)	e_write(&mBuf3,0,0, PICPART*(memOffsetCount-8), &bufInPic, sizeof(bufInPic));
+					else 								e_write(&mBuf4,0,0, PICPART*(memOffsetCount-12), &bufInPic, sizeof(bufInPic));
 					fprintf(stderr,"Wrote to %i\n",PICPART*memOffsetCount);
 					memOffsetCount+=1;						
-					row+=1;
-					first = 1;
-					if (row == 4) {
-						row = 0;
-						col+= 1;
-					}
 				}
 			}
 			fprintf(stderr,"Finished Setup\n");	
@@ -109,7 +109,10 @@ int main()
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					e_read(&mBuf,0,0, PICPART*memOffsetCount, &bufResultPic, sizeof(bufResultPic));
+					if(memOffsetCount < 4) 				e_read(&mBuf1,0,0, PICPART*(memOffsetCount-0), &bufResultPic, sizeof(bufResultPic));
+					else if (memOffsetCount >= 4 < 8)	e_read(&mBuf2,0,0, PICPART*(memOffsetCount-4), &bufResultPic, sizeof(bufResultPic));
+					else if (memOffsetCount >= 8 < 12)	e_read(&mBuf3,0,0, PICPART*(memOffsetCount-8), &bufResultPic, sizeof(bufResultPic));
+					else 								e_read(&mBuf4,0,0, PICPART*(memOffsetCount-12), &bufResultPic, sizeof(bufResultPic));					
 					for(counter=0; counter < PICPART; counter++) {			
 						fprintf(file, "%i\n", bufResultPic[counter]);
 					}
@@ -128,7 +131,7 @@ int main()
 		// Close work group and free allocated resources. 
         e_close(&dev);
         // release resources allocated by e_alloc 
-        e_free(&mBuf);
+        e_free(&mBuf1); e_free(&mBuf2); e_free(&mBuf3); e_free(&mBuf4);
         // release resources allocated by e_init        
         e_finalize();
 
