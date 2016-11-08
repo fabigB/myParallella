@@ -39,7 +39,7 @@ int main(void) {
 	if (coreid == 0x808) {
 		// Stop timer:
 		timerVal0Stop = e_ctimer_stop(E_CTIMER_0);
-		outbuffer = (char *) 0x2900;
+		outbuffer = (char *) 0x2000;
 		sprintf(outbuffer, "Done in: %u clk cylces",timerVal0Stop);
 	}
 

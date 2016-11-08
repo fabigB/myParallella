@@ -95,12 +95,9 @@ int main()
 		// Start the group:				
 		e_start_group(&dev);
         // Wait for targets to finish:
-        usleep(10000);
+        usleep(100000);
 		
 		fprintf(stderr,"Reading from groups\n");
-		// Read time it took:
-		e_read(&dev,0,0, 0x2900, &message, sizeof(message));
-        fprintf(stderr,"Core 0 sends:%s\n", message);  
 		// Write result:
 		file = fopen("../picResult.pgm", "w");
 		if (file) {
@@ -114,8 +111,8 @@ int main()
 					for(counter=0; counter < PICPART/2; counter++) {			
 						fprintf(file, "%i\n", bufResultPicI[counter]);
 					}
-					e_read(&dev,row,col, PIC_START, &bufResultPicII, sizeof(bufResultPicII));
-					for(counter=PICPART/2; counter < PICPART; counter++) {			
+					e_read(&dev,row,col, PIC_START+PICPART/2, &bufResultPicII, sizeof(bufResultPicII));
+					for(counter=0; counter < PICPART/2; counter++) {	
 						fprintf(file, "%i\n", bufResultPicII[counter]);
 					}
 				}
@@ -124,7 +121,9 @@ int main()
 			fprintf(stderr,"Wrote result picture\n");
 		}
 		else fprintf(stderr,"Failed to open result picture\n");
-
+		// Read time it took:
+		e_read(&dev,0,0, 0x2000, &message, sizeof(message));
+        fprintf(stderr,"Core 0 sends:%s\n", message);  
 
 
 		// Close work group and free allocated resources. 
