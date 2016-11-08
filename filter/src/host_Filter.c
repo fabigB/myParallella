@@ -18,9 +18,8 @@ int main()
 		char bufFirstLines[FIRSTLINE_SIZE];
 		char * line = NULL;
 		size_t len = 0;
-		int bufInPic[PICPART/2];
-		int bufResultPicI[PICPART/2];
-		int bufResultPicII[PICPART/2];
+		int bufInPic[PICPART];
+		int bufResultPic[PICPART];
 		FILE *file;
 		size_t nread;
 		// Core message:
@@ -77,29 +76,20 @@ int main()
 					pixel = line[0]-'0';
 				bufInPic[counter] = pixel;
 				counter += 1;
-				if (counter == PICPART/2)	{
+				if (counter == PICPART)	{
 					counter = 0;
 					//Write to epiphany memory:
-					if (first == 1) { 
-						e_write(&mBuf,row,col, PICPART*memOffsetCount, &bufInPic, sizeof(bufInPic));
-
-						first = 0; 
+					e_write(&mBuf,0,0, PICPART*memOffsetCount, &bufInPic, sizeof(bufInPic));
+					fprintf(stderr,"Wrote to %i\n",PICPART*memOffsetCount);
+					memOffsetCount+=1;						
+					row+=1;
+					first = 1;
+					if (row == 4) {
+						row = 0;
+						col+= 1;
 					}
-					else {
-						e_write(&mBuf,row,col, PICPART*memOffsetCount+PICPART/2, &bufInPic, sizeof(bufInPic));
-						fprintf(stderr,"Wrote to %i,%i\n",row,col);
-						memOffsetCount+=1;						
-						row+=1;
-						first = 1;
-						if (row == 4) {
-							row = 0;
-							col+= 1;
-						}
-					}
-					
 				}
 			}
-//			e_write(&mBuf,0,0,0x0, bufInPic, sizeof(bufInPic));
 			fprintf(stderr,"Finished Setup\n");	
 			fclose(file);
 		}
@@ -119,13 +109,9 @@ int main()
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					e_read(&mBuf,row,col, PICPART*memOffsetCount, &bufResultPicI, sizeof(bufResultPicI));
-					for(counter=0; counter < PICPART/2; counter++) {			
-						fprintf(file, "%i\n", bufResultPicI[counter]);
-					}
-					e_read(&mBuf,row,col, PICPART*memOffsetCount+PICPART/2, &bufResultPicII, sizeof(bufResultPicII));
-					for(counter=0; counter < PICPART/2; counter++) {	
-						fprintf(file, "%i\n", bufResultPicII[counter]);
+					e_read(&mBuf,0,0, PICPART*memOffsetCount, &bufResultPic, sizeof(bufResultPic));
+					for(counter=0; counter < PICPART; counter++) {			
+						fprintf(file, "%i\n", bufResultPic[counter]);
 					}
 					memOffsetCount+=1;
 				}
