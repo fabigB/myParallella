@@ -26,8 +26,7 @@ int main()
         // Get platform specific configuration, number of devices, external memory, ...
         e_get_platform_info(&epiphany_config);
 
-		// Define a single core work group (size 1x4)
-		e_open(&dev,0,0,1,4);
+		e_open(&dev,0,0,4,4);
 		// Perform soft reset of the created work group
 		e_reset_group(&dev);
 

@@ -22,10 +22,8 @@ int main(void) {
 	//Write to core 1
 	*remoteX = 1;
 
-	sprintf(outbuffer, "Before While");
 	//Wait for answer!
 	while(*myX != 1);
-
 
 	//Stop timer:
 	timerValStop = e_ctimer_stop(E_CTIMER_0);
