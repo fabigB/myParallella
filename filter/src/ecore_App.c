@@ -3,7 +3,7 @@
 #include "e-lib.h"
 
 #define NUM_CORES 16
-#define PICPART 4096 // 256x256 = 65536 --> /16 = 4096
+#define PICPART 1024 //128x128 --> 16384 /16 = 1024 
 #define PIC_START 0x8f000000
 
 //Using shared_dram:  0x8f000000 - 0x8f7fffff Size: 0x00800000 (8 MB)
