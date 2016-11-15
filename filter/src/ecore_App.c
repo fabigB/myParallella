@@ -4,9 +4,16 @@
 
 #define NUM_CORES 16
 #define PICPART 1024 //128x128 --> 16384 /16 = 1024 
+#define ROW_LENGTH 128
 #define PIC_START 0x8f000000
 
 //Using shared_dram:  0x8f000000 - 0x8f7fffff Size: 0x00800000 (8 MB)
+
+int abs(int x) {
+	if (x < 0) return -x;
+	else return x;
+}
+
 
 int main(void) {
 
@@ -16,6 +23,8 @@ int main(void) {
 	char *outbuffer;
 	unsigned timerVal0Start, timerVal0Stop;
     e_coreid_t coreid;
+	int *u0, *u1, *u2, *m0, *m1, *m2, *l0, *l1, *l2;
+	int s1, s2, sobel;
     
 	//Get CoreID
 	coreid = e_get_coreid();
@@ -54,10 +63,53 @@ int main(void) {
 		default:	offset = 99; break;
 	}
 
-	//Simply invert
+/*	//Simply invert
 	for ( i = 0; i < PICPART; i++) {
 		x = (int *) PIC_START+ PICPART*offset + i;
 		*x = 255-*x;
+	}
+*/
+
+	//Simple Sobel - Reading every pixel 9 times
+	for ( i = 0; i < PICPART; i++) {
+		u0 = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH - 1;
+		u1 = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH;
+		u2 = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH + 1;
+		m0 = (int *) PIC_START+ PICPART*offset + i - 1;
+		m1 = (int *) PIC_START+ PICPART*offset + i;
+		m2 = (int *) PIC_START+ PICPART*offset + i + 1;
+		l0 = (int *) PIC_START+ PICPART*offset + i + ROW_LENGTH - 1;
+		l1 = (int *) PIC_START+ PICPART*offset + i + ROW_LENGTH;
+		l2 = (int *) PIC_START+ PICPART*offset + i + ROW_LENGTH + 1;
+		if (coreid == 0x808) {
+			//First row - mirror first row
+			u0 = m0;
+			u1 = m1;
+			u2 = m2;
+		}
+		else if (coreid == 0x8cb) {
+			//Last row - mirror last row
+			l0 = m0;
+			l1 = m1;
+			l2 = m2;
+		}
+		if (i == 0) {
+			//First pixel in each row
+			u0 = u1;
+			m0 = m1;			
+			l0 = l1;
+		}
+		else if (i == (ROW_LENGTH-1)) {
+			//Last pixel in each row
+			u2 = u1;
+			m2 = m1;
+			l2 = l1;
+		}
+		s1 = abs( *u0 - *l0 + (*u1)*2 - (*l1)*2 + *u2 - *l2);
+		s2 = abs( *u2 - *u0 + (*m2)*2 - (*m0)*2 + *l2 - *l0);
+		sobel = ( s1 + s2 ) / 8;
+		*m1 = sobel;
+		
 	}
 
 	//Meet all at the barrier
