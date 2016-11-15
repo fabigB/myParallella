@@ -18,7 +18,7 @@ int abs(int x) {
 
 int main(void) {
 
-	int *x;
+	int *x, *result;
 	int i;
 	int offset = 0;
 	char *outbuffer;
@@ -67,7 +67,8 @@ int main(void) {
 	//Simply invert
 	for ( i = 0; i < PICPART; i++) {
 		x = (int *) PIC_START+ PICPART*offset + i;
-		*x = 255-*x;
+		result = (int *) PIC_RESULT+ PICPART*offset + i;
+		*result = 255-*x;
 	}
 
 /*
