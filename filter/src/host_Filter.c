@@ -3,8 +3,8 @@
 #include "e-hal.h"
 
 #define FIRSTLINE_SIZE 15
-#define PICSIZE 65536 // 256x256
-#define PICPART 4096 //  65536 /16 = 4096
+#define PICSIZE 16384 // 128x128
+#define PICPART 1024 //  16384 /16 = 1024
 
 #define BUFFEROFFSET (0x01000000)
 //The offset for e_alloc will be an offset from 0x8e000000:
@@ -98,7 +98,7 @@ int main()
 		// Write result:
 		file = fopen("../picResult.pgm", "w");
 		if (file) {
-			fprintf(file, bufFirstLines);
+			fprintf(file, "%s", bufFirstLines);
 			memOffsetCount = 0;
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
