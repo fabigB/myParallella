@@ -5,7 +5,8 @@
 #define NUM_CORES 16
 #define PICPART 1024 //128x128 --> 16384 /16 = 1024 
 #define ROW_LENGTH 128
-#define PIC_START 0x8f000000
+#define PIC_START  0x8f000000
+#define PIC_RESULT 0x8f400000
 
 //Using shared_dram:  0x8f000000 - 0x8f7fffff Size: 0x00800000 (8 MB)
 
@@ -63,13 +64,13 @@ int main(void) {
 		default:	offset = 99; break;
 	}
 
-/*	//Simply invert
+	//Simply invert
 	for ( i = 0; i < PICPART; i++) {
 		x = (int *) PIC_START+ PICPART*offset + i;
 		*x = 255-*x;
 	}
-*/
 
+/*
 	//Simple Sobel - Reading every pixel 9 times
 	for ( i = 0; i < PICPART; i++) {
 		u0 = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH - 1;
@@ -111,7 +112,7 @@ int main(void) {
 		*m1 = sobel;
 		
 	}
-
+*/
 	//Meet all at the barrier
 	e_barrier(bar_array,tgt_bar_array);
 

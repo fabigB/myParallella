@@ -6,9 +6,11 @@
 #define PICSIZE 16384 // 128x128
 #define PICPART 1024 //  16384 /16 = 1024
 
-#define BUFFEROFFSET (0x01000000)
+#define PIC_START (0x01000000)
 //The offset for e_alloc will be an offset from 0x8e000000:
 //	Offset of 0x01000000 --> 0x8e000000 + 0x01000000 = 0x8f000000 (shared_dram)
+#define PIC_RESULT (0x01400000)
+//	Offset of 0x01000000 --> 0x8e000000 + 0x01400000 = 0x8f400000 (shared_dram)
 int main()
 {
         /************Variable declaration*************/
@@ -25,7 +27,8 @@ int main()
 		// Core message:
         char message[32];        
 		// external memory buffer data:
-        e_mem_t	mBuf;
+        e_mem_t	mBuf_write;
+		e_mem_t mBuf_read;
 
         /*********Epiphany var declaration***********/
         // Epiphany platform information:
@@ -45,7 +48,8 @@ int main()
 
 
         // Allocate shared memory:
-		e_alloc(&mBuf, BUFFEROFFSET, PICSIZE*sizeof(int));
+		e_alloc(&mBuf_write, PIC_START, PICSIZE*sizeof(int));
+		e_alloc(&mBuf_read, PIC_RESULT, PICSIZE*sizeof(int));
 
 		// Define a single core work group (size 4x4)
 		e_open(&dev,0,0,4,4);
@@ -79,7 +83,7 @@ int main()
 				if (counter == PICPART)	{
 					counter = 0;
 					//Write to epiphany memory:
-					e_write(&mBuf,0,0, PICPART*memOffsetCount*sizeof(int), &bufInPic, sizeof(bufInPic));
+					e_write(&mBuf_write,0,0, PICPART*memOffsetCount*sizeof(int), &bufInPic, sizeof(bufInPic));
 					fprintf(stderr,"Wrote to %i\n",PICPART*memOffsetCount);
 					memOffsetCount+=1;						
 				}
@@ -103,7 +107,7 @@ int main()
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					e_read(&mBuf,0,0, PICPART*memOffsetCount*sizeof(int), &bufResultPic, sizeof(bufResultPic));
+					e_read(&mBuf_read,0,0, PICPART*memOffsetCount*sizeof(int), &bufResultPic, sizeof(bufResultPic));
 					for(counter=0; counter < PICPART; counter++) {			
 						fprintf(file, "%i\n", bufResultPic[counter]);
 					}
@@ -122,7 +126,8 @@ int main()
 		// Close work group and free allocated resources. 
         e_close(&dev);
         // release resources allocated by e_alloc 
-        e_free(&mBuf);
+        e_free(&mBuf_write);
+		e_free(&mBuf_read);
         // release resources allocated by e_init        
         e_finalize();
 
