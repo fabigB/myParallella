@@ -12,20 +12,12 @@ int main(void) {
 	char *outbuffer;
 	outbuffer = (char *) 0x3000;
 	
-	//Set up Barrier
-	volatile e_barrier_t bar_array[NUM_CORES]; 
-	volatile e_barrier_t *tgt_bar_array[NUM_CORES]; 
-    e_barrier_init(bar_array,tgt_bar_array);
-
 	// Set up addresses and set local variable to 0:
 	myX = (int *) ptr_adr_mycore;
 	remoteX = (int *) ptr_adr_core1;
 	*myX = 0;
 
-	sprintf(outbuffer, "At Barrier");
-	// Sync with other core
-	e_barrier(bar_array,tgt_bar_array);
-	sprintf(outbuffer, "After Barrier, Before While");
+	sprintf(outbuffer, "Before While");
 	
 	//Wait for message from Core 1!
 	while(*myX != 1);

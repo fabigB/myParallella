@@ -32,18 +32,17 @@ int main()
 		e_reset_group(&dev);
 
   		// Load the two epiphany programs
-		feedback = e_load("e_App_1.elf",&dev,0,0,E_FALSE);
-        if (feedback != E_OK)
-        {
-                fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:0 \n", feedback);
-        }
-		feedback = e_load("e_App_2.elf",&dev,0,1,E_FALSE);
+		feedback = e_load("e_App_2.elf",&dev,0,1,E_TRUE);
         if (feedback != E_OK)
         {
                 fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:1 \n", feedback);
         }
-		// Start the group:				
-		e_start_group(&dev);
+		usleep(100);		
+		feedback = e_load("e_App_1.elf",&dev,0,0,E_TRUE);
+        if (feedback != E_OK)
+        {
+                fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:0 \n", feedback);
+        }
 
         // Wait for target to finish:
         usleep(10000);
@@ -51,7 +50,7 @@ int main()
         e_read(&dev,0,0,0x3000, &message, 128);
         fprintf(stderr,"Result: %s\n", message);
 
-        e_read(&dev,0,2,0x3000, &message, 128);
+        e_read(&dev,0,1,0x3000, &message, 128);
         fprintf(stderr,"Result 2: %s\n", message);
     	
 		// Close work group and free allocated resources. 
