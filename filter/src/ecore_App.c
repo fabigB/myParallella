@@ -25,7 +25,7 @@ int main(void) {
 	unsigned timerVal0Start, timerVal0Stop;
     e_coreid_t coreid;
 	int *u0, *u1, *u2, *m0, *m1, *m2, *l0, *l1, *l2;
-	int s1, s2, sobel;
+	int s1, s2;
     
 	//Get CoreID
 	coreid = e_get_coreid();
@@ -65,13 +65,13 @@ int main(void) {
 	}
 
 	//Simply invert
-	for ( i = 0; i < PICPART; i++) {
+/*	for ( i = 0; i < PICPART; i++) {
 		x = (int *) PIC_START+ PICPART*offset + i;
 		result = (int *) PIC_RESULT+ PICPART*offset + i;
 		*result = 255-*x;
 	}
+*/
 
-/*
 	//Simple Sobel - Reading every pixel 9 times
 	for ( i = 0; i < PICPART; i++) {
 		u0 = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH - 1;
@@ -109,11 +109,10 @@ int main(void) {
 		}
 		s1 = abs( *u0 - *l0 + (*u1)*2 - (*l1)*2 + *u2 - *l2);
 		s2 = abs( *u2 - *u0 + (*m2)*2 - (*m0)*2 + *l2 - *l0);
-		sobel = ( s1 + s2 ) / 8;
-		*m1 = sobel;
-		
+		result = (int *) PIC_RESULT+ PICPART*offset + i;	
+		*result = ( s1 + s2 ) / 8;		
 	}
-*/
+
 	//Meet all at the barrier
 	e_barrier(bar_array,tgt_bar_array);
 
