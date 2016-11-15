@@ -5,11 +5,17 @@ This small example project deals with the inter core communication between two c
 The default memory map was assumed (See Figure 10 in Parallella Ref Manual (REV 14.09.09))
 
 --- Work in progress --- 
+
 Core0 to Core1: 126-127 cycles
+
 Core0 to Core2: 126-127 cycles
+
 Core0 to Core3: 126-127 cycles
+
 ...
+
 Core0 to Core7: 126-127 cycles
+
 Core0 to CoreF: 126-136 cycles
 
 

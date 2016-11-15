@@ -23,7 +23,7 @@ int main(void) {
 	*remoteX = 1;
 
 	//Wait for answer!
-	while(*myX != 1);
+	while(*myX == 0);
 
 	//Stop timer:
 	timerValStop = e_ctimer_stop(E_CTIMER_0);

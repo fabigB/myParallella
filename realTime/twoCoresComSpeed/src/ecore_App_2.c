@@ -13,7 +13,7 @@ int main(void) {
 	*myX = 0;
 
 	//Wait for message from Core 0!
-	while(*myX != 1);
+	while(*myX == 0);
 
 	//Write response to Core 0
 	*remoteX = 1;
