@@ -25,4 +25,10 @@ runs 1 core. A timer triggers an interrupt.
 ## mutex:
 runs 16 cores all incrementing ten times a shared variable x. The use of mutexes ensures that the increment is done atomic so that the expected result: 160 is produced. 
 
+## filter:
+runs 16 cores all doing the same filter operation on a picture and storing it back in memory.
+
+## realTime:
+different projects analyzing the speed of the inter core communication and NOC.  
+
 
