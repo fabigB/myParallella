@@ -17,5 +17,5 @@ mkdir -p debug/
 ${CROSS_PREFIX}gcc src/host_CoreCom.c -o debug/hostCom.elf -I ${EINCS} -L ${ELIBS} -le-hal -le-loader
 
 # Build DEVICE side program
-e-gcc -T ${ELDF} src/ecore_App_1.c -o debug/e_App_2.elf -le-lib
+e-gcc -T ${ELDF} src/ecore_App_1.c -o debug/e_App_1.elf -le-lib
 e-gcc -T ${ELDF} src/ecore_App_2.c -o debug/e_App_2.elf -le-lib
