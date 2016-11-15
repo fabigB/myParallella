@@ -101,7 +101,7 @@ int main(void) {
 			m0 = m1;			
 			l0 = l1;
 		}
-		else if ( (i%(ROW_LENGTH-1)) == 0) {
+		else if ( ((i+1)%ROW_LENGTH) == 0) {
 			//Last pixel in each row
 			u2 = u1;
 			m2 = m1;
