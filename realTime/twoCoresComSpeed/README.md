@@ -4,6 +4,7 @@ This small example project deals with the inter core communication between two c
 
 The default memory map was assumed (See Figure 10 in Parallella Ref Manual (REV 14.09.09))
 
+Core0 to Core1: 127 cycles
 
 
 
