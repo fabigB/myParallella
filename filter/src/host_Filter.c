@@ -45,7 +45,7 @@ int main()
 
 
         // Allocate shared memory:
-		e_alloc(&mBuf, BUFFEROFFSET, PICSIZE);
+		e_alloc(&mBuf, BUFFEROFFSET, 19456);
 
 		// Define a single core work group (size 4x4)
 		e_open(&dev,0,0,4,4);
