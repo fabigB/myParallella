@@ -95,7 +95,7 @@ int main(void) {
 			l1 = m1;
 			l2 = m2;
 		}
-		if (i == 0) {
+		if ( (i % ROW_LENGTH) == 0) {
 			//First pixel in each row
 			u0 = u1;
 			m0 = m1;			
