@@ -46,10 +46,13 @@ int main()
 		e_start_group(&dev);
 
         // Wait for target to finish:
-        usleep(1000);
+        usleep(10000);
 		// Read data of length of the buffer from the work group to local buffer
         e_read(&dev,0,0,0x3000, &message, 128);
         fprintf(stderr,"Result: %s\n", message);
+
+        e_read(&dev,0,2,0x3000, &message, 128);
+        fprintf(stderr,"Result 2: %s\n", message);
     	
 		// Close work group and free allocated resources. 
         e_close(&dev);
