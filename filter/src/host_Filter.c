@@ -45,7 +45,7 @@ int main()
 
 
         // Allocate shared memory:
-		e_alloc(&mBuf, BUFFEROFFSET, 19456);
+		e_alloc(&mBuf, BUFFEROFFSET, PICSIZE*sizeof(int));
 
 		// Define a single core work group (size 4x4)
 		e_open(&dev,0,0,4,4);
@@ -79,7 +79,7 @@ int main()
 				if (counter == PICPART)	{
 					counter = 0;
 					//Write to epiphany memory:
-					e_write(&mBuf,0,0, PICPART*memOffsetCount, &bufInPic, sizeof(bufInPic));
+					e_write(&mBuf,0,0, PICPART*memOffsetCount*sizeof(int), &bufInPic, sizeof(bufInPic));
 					fprintf(stderr,"Wrote to %i\n",PICPART*memOffsetCount);
 					memOffsetCount+=1;						
 				}
@@ -103,7 +103,7 @@ int main()
 			for(row=0; row <4; row++) {
 				for(col=0; col <4; col++) {			
 					// Read data of length of the buffer from the work group to local buffer
-					e_read(&mBuf,0,0, PICPART*memOffsetCount, &bufResultPic, sizeof(bufResultPic));
+					e_read(&mBuf,0,0, PICPART*memOffsetCount*sizeof(int), &bufResultPic, sizeof(bufResultPic));
 					for(counter=0; counter < PICPART; counter++) {			
 						fprintf(file, "%i\n", bufResultPic[counter]);
 					}
