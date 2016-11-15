@@ -2,10 +2,7 @@
 
 #include "e-lib.h"
 
-#define NUM_CORES 2
-#define ptr_adr_mycore 0x3500
-#define ptr_adr_core1  0x80803500
-#define ptr_adr_core2  0x80903500
+#include "common.h"
 
 int main(void) {
 	char *outbuffer;
@@ -15,14 +12,14 @@ int main(void) {
 
 	// Set up addresses and set local variable to 0:
 	myX = (int *) ptr_adr_mycore;
-	remoteX = (int *) ptr_adr_core2;
+	remoteX = (int *) ptr_adr_core1;
 	*myX = 0;
 
 	//Set up timer:
 	timerValStart = e_ctimer_set(E_CTIMER_0,  E_CTIMER_MAX);
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);
 
-	//Write to core 2
+	//Write to core 1
 	*remoteX = 1;
 
 	sprintf(outbuffer, "Before While");
@@ -35,7 +32,7 @@ int main(void) {
 	time = timerValStart - timerValStop;
 	
     // Write message:
-	sprintf(outbuffer, "Clock cycles to send and receive:",time);
+	sprintf(outbuffer, "Clock cycles to send and receive: %u",time);
     return 0;
 }
 
