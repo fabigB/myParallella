@@ -146,7 +146,7 @@ int main(void) {
 			line3[lineCounter] = *x;
 			lineCounter++;
 		}
-		if ( lineCounter==128 ) {
+		if ( lineCounter==ROW_LENGTH ) {
 			// End of a row. Do computation
 			//First pixel in each 
 			s1 = abs( line1[0] - line3[0] + line1[0]*2 - line3[0]*2 + line1[1] - line3[1]);			
