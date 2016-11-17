@@ -132,10 +132,13 @@ int main(void) {
 				}
 			}
 			else {
-				//if (coreid != 0x8cb && i < (PICPART-ROW_LENGTH)) {				
+				if (coreid == 0x8cb && i >= PICPART) {				
+				
+				}
+				else {
 					x = (int *) PIC_START+ PICPART*offset + i;
 					line3[lineCounter] = *x;
-				//}
+				}
 					lineCounter++;
 								
 			} 
