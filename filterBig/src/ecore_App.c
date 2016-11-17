@@ -132,15 +132,9 @@ int main(void) {
 				}
 			}
 			else {
-				if (coreid == 0x8cb && i >= PICPART) {				
-				
-				}
-				else {
 					x = (int *) PIC_START+ PICPART*offset + i;
 					line3[lineCounter] = *x;
-				}
 					lineCounter++;
-								
 			} 
 		}
 		else {
@@ -148,8 +142,13 @@ int main(void) {
 			line1[lineCounter] = line2[lineCounter];
 			line2[lineCounter] = line3[lineCounter];
 			//Load new line:
-			x = (int *) PIC_START+ PICPART*offset + i;
-			line3[lineCounter] = *x;
+			if (coreid == 0x8cb && i >= PICPART) {				
+				line3[lineCounter] = line3[lineCounter];
+			}
+			else {
+				x = (int *) PIC_START+ PICPART*offset + i;
+				line3[lineCounter] = *x;
+			}
 			lineCounter++;
 		}
 		if ( lineCounter==ROW_LENGTH ) {
