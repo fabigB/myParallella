@@ -119,7 +119,7 @@ int main(void) {
 	//Fast Sobel - Reading every pixel once
 	rowCounter = 0;
 	lineCounter = 0;
-	for ( i = 0; i < PICPART; i++) {
+	for ( i = 0; i < PICPART+ROW_LENGTH; i++) {
 		if( i < (2*ROW_LENGTH) ) {
 			//Load the first three lines:
 			if ( i < ROW_LENGTH ) {
@@ -142,8 +142,13 @@ int main(void) {
 			line1[lineCounter] = line2[lineCounter];
 			line2[lineCounter] = line3[lineCounter];
 			//Load new line:
-			x = (int *) PIC_START+ PICPART*offset + i;
-			line3[lineCounter] = *x;
+			if (coreid == 0x8cb && i >= PICPART) {				
+				line3[lineCounter] = line3[lineCounter];
+			}
+			else {
+				x = (int *) PIC_START+ PICPART*offset + i;
+				line3[lineCounter] = *x;
+			}
 			lineCounter++;
 		}
 		if ( lineCounter==ROW_LENGTH ) {
