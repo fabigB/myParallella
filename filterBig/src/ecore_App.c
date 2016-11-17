@@ -67,15 +67,15 @@ int main(void) {
 	}
 
 	//Simply invert
-	for ( i = 0; i < PICPART; i++) {
+/*	for ( i = 0; i < PICPART; i++) {
 		x = (int *) PIC_START+ PICPART*offset + i;
 		result = (int *) PIC_RESULT+ PICPART*offset + i;
 		*result = 255-*x;
 	}
-
+*/
 
 	//Simple Sobel - Reading every pixel 9 times
-/*	for ( i = 0; i < PICPART; i++) {
+	for ( i = 0; i < PICPART; i++) {
 		u0 = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH - 1;
 		u1 = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH;
 		u2 = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH + 1;
@@ -114,7 +114,7 @@ int main(void) {
 		result = (int *) PIC_RESULT+ PICPART*offset + i;	
 		*result = ( s1 + s2 ) / 8;		
 	}
-*/
+
 
 	//Fast Sobel - Reading every pixel once
 /*	rowCounter = 0;
