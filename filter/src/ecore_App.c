@@ -142,13 +142,14 @@ int main(void) {
 			line1[lineCounter] = line2[lineCounter];
 			line2[lineCounter] = line3[lineCounter];
 			//Load new line:
-			if (coreid != 0x8cb && i >= (PICPART-ROW_LENGTH)) { //If its the last row mirrow the last line
+			if (coreid == 0x8cb && i >= (PICPART-ROW_LENGTH)) { }  //If its the last row mirrow the last line
+			else { 
 				x = (int *) PIC_START+ PICPART*offset + i;
 				line3[lineCounter] = *x;
 			}
 			lineCounter++;
 		}
-		if ( ((i+1)%ROW_LENGTH) == 0 && i > ROW_LENGTH ) {
+		if ( lineCounter==128 ) {
 			// End of a row. Do computation
 			//First pixel in each 
 			s1 = abs( line1[0] - line3[0] + line1[0]*2 - line3[0]*2 + line1[1] - line3[1]);			
