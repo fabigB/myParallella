@@ -19,13 +19,15 @@ int abs(int x) {
 int main(void) {
 
 	int *x, *result;
-	int i;
+	int i, j;
 	int offset = 0;
 	char *outbuffer;
 	unsigned timerVal0Start, timerVal0Stop;
     e_coreid_t coreid;
 	int *u0, *u1, *u2, *m0, *m1, *m2, *l0, *l1, *l2;
 	int s1, s2;
+	int line1[ROW_LENGTH],line2[ROW_LENGTH], line3[ROW_LENGTH];
+	int lineCounter, rowCounter;
     
 	//Get CoreID
 	coreid = e_get_coreid();
@@ -83,13 +85,13 @@ int main(void) {
 		l0 = (int *) PIC_START+ PICPART*offset + i + ROW_LENGTH - 1;
 		l1 = (int *) PIC_START+ PICPART*offset + i + ROW_LENGTH;
 		l2 = (int *) PIC_START+ PICPART*offset + i + ROW_LENGTH + 1;
-		if (coreid == 0x808) {
+		if (coreid == 0x808 && i < ROW_LENGTH ) {
 			//First row - mirror first row
 			u0 = m0;
 			u1 = m1;
 			u2 = m2;
 		}
-		else if (coreid == 0x8cb) {
+		else if (coreid == 0x8cb && i >= (PICPART-ROW_LENGTH) ) {
 			//Last row - mirror last row
 			l0 = m0;
 			l1 = m1;
@@ -112,6 +114,67 @@ int main(void) {
 		result = (int *) PIC_RESULT+ PICPART*offset + i;	
 		*result = ( s1 + s2 ) / 8;		
 	}
+/*
+	//Fast Sobel - Reading every pixel once
+	rowCounter = 0;
+	lineCounter = 0;
+	for ( i = 0; i < PICPART; i++) {
+		if( i < (2*ROW_LENGTH) ) {
+			//Load the first three lines:
+			if ( i < ROW_LENGTH ) {
+				x = (int *) PIC_START+ PICPART*offset + i;
+				line2[i] = *x;
+				if(coreid == 0x808) line1[i] = line2[i]; //The first row will be mirrowed
+				else {
+					x = (int *) PIC_START+ PICPART*offset + i - ROW_LENGTH;
+					line1[i] = *x;
+				}
+			}
+			else {
+				x = (int *) PIC_START+ PICPART*offset + i;
+				line3[lineCounter] = *x;
+				lineCounter++;
+			} 
+		}
+		else {
+			//Shift old values:
+			line1[lineCounter] = line2[lineCounter];
+			line2[lineCounter] = line3[lineCounter];
+			//Load new line:
+			if (coreid != 0x8cb && i >= (PICPART-ROW_LENGTH)) { //If its the last row mirrow the last line
+				x = (int *) PIC_START+ PICPART*offset + i;
+				line3[lineCounter] = *x;
+			}
+			lineCounter++;
+		}
+		if ( ((i+1)%ROW_LENGTH) == 0 && i > ROW_LENGTH ) {
+			// End of a row. Do computation
+			//First pixel in each 
+			s1 = abs( line1[0] - line3[0] + line1[0]*2 - line3[0]*2 + line1[1] - line3[1]);			
+			s2 = abs( line1[1] - line1[0] + line2[1]*2 - line2[0]*2 + line3[1] - line3[0]);
+			result = (int *) PIC_RESULT+ PICPART*offset + ROW_LENGTH*rowCounter;	
+			*result = ( s1 + s2 ) / 8;	
+			//Pixels inbetween			
+			for(j = 1; j < ROW_LENGTH-1; j++) {
+				s1 = abs( line1[j-1] - line3[j-1] + line1[j]  *2 - line3[j]  *2 + line1[j+1] - line3[j+1]);			
+				s2 = abs( line1[j+1] - line1[j-1] + line2[j+1]*2 - line2[j-1]*2 + line3[j+1] - line3[j-1]);
+				result = (int *) PIC_RESULT+ PICPART*offset + ROW_LENGTH*rowCounter + j;	
+				*result = ( s1 + s2 ) / 8;	
+			}
+			//Last pixel in each row
+			j = ROW_LENGTH-1;
+			s1 = abs( line1[j-1] - line3[j-1] + line1[j]*2 - line3[j]  *2 + line1[j] - line3[j]);			
+			s2 = abs( line1[j]   - line1[j-1] + line2[j]*2 - line2[j-1]*2 + line3[j] - line3[j-1]);
+			result = (int *) PIC_RESULT+ PICPART*offset + ROW_LENGTH*rowCounter + j;	
+			*result = ( s1 + s2 ) / 8;
+
+			//Reset the line counter and increment. 
+			lineCounter = 0;
+			rowCounter++;
+		}		
+	}
+*/
+
 
 	//Meet all at the barrier
 	e_barrier(bar_array,tgt_bar_array);
