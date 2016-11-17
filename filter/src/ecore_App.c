@@ -142,11 +142,11 @@ int main(void) {
 			line1[lineCounter] = line2[lineCounter];
 			line2[lineCounter] = line3[lineCounter];
 			//Load new line:
-			if (coreid == 0x8cb && i >= (PICPART-ROW_LENGTH)) { }  //If its the last row mirrow the last line
-			else { 
+			//if (coreid == 0x8cb && i >= (PICPART-ROW_LENGTH)) { }  //If its the last row mirrow the last line
+			//else { 
 				x = (int *) PIC_START+ PICPART*offset + i;
 				line3[lineCounter] = *x;
-			}
+			//}
 			lineCounter++;
 		}
 		if ( lineCounter==128 ) {
