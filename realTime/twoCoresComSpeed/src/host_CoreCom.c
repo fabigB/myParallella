@@ -64,7 +64,7 @@ int main()
 		    e_finalize();
 
 		average = average/i;
-		printf("Average: %f\n",average );
+		printf("Average: %f\n",(average-89)/2 );
 
         return 0;
 }
