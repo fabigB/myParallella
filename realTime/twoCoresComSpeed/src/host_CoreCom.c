@@ -63,7 +63,7 @@ int main()
 		    // release resources allocated by e_init        
 		    e_finalize();
 
-		average = average/(i+1);
+		average = average/i;
 		printf("Average: %f\n",average );
 
         return 0;
