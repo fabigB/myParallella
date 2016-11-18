@@ -21,16 +21,18 @@ int main()
         e_return_stat_t feedback;
 
 	
-		for(i = 0; i < 100; i++) {        
-			/*********Epiphany set up***********/
-		    // Initialize the system:       
-		    e_init(NULL);
-		    // Reset the system:
-		    e_reset_system();
-		    // Get platform specific configuration, number of devices, external memory, ...
-		    e_get_platform_info(&epiphany_config);
+		
+		/*********Epiphany set up***********/
+	    // Initialize the system:       
+	    e_init(NULL);
+	    // Reset the system:
+	    e_reset_system();
+	    // Get platform specific configuration, number of devices, external memory, ...
+	    e_get_platform_info(&epiphany_config);
 
-			e_open(&dev,0,0,4,4);
+		e_open(&dev,0,0,4,4);
+
+		for(i = 0; i < 100; i++) {        		
 			// Perform soft reset of the created work group
 			e_reset_group(&dev);
 
@@ -53,13 +55,13 @@ int main()
 		    e_read(&dev,0,0,0x3000, &message, 64);
 		    fprintf(stderr,"Result: %s\n", message);
 			average += sscanf(message, "%d", &i);
-
+		}
 			// Close work group and free allocated resources. 
 		    e_close(&dev);
 		    
 		    // release resources allocated by e_init        
 		    e_finalize();
-		}
+
 		average = average/(i+1);
 		fprintf(stderr,"Average: %f\n",average );
 
