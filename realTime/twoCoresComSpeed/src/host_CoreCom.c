@@ -9,7 +9,7 @@ int main()
         unsigned col;
         char message[64];
 		char appNameBuf[32];
-		int i;
+		int i,m=0;
 		double average;
 
         /*********Epiphany var declaration***********/
@@ -53,8 +53,9 @@ int main()
 		    usleep(1000);
 			// Read data of length of the buffer from the work group to local buffer
 		    e_read(&dev,0,0,0x3000, &message, 64);
-		    fprintf(stderr,"Result: %s\n", message);
-			average += sscanf(message, "%d", &i);
+		    printf("Result: %s\n", message);
+			sscanf(message, "%d", &m);
+			average += m;
 		}
 			// Close work group and free allocated resources. 
 		    e_close(&dev);
@@ -63,7 +64,7 @@ int main()
 		    e_finalize();
 
 		average = average/(i+1);
-		fprintf(stderr,"Average: %f\n",average );
+		printf("Average: %f\n",average );
 
         return 0;
 }
