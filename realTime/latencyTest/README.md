@@ -1,4 +1,4 @@
-# Comparing communication speed between two cores
+# Comparing communication latency between two cores
 
 This small example project deals with the inter core communication between two cores distributed somewhere on the chip. One core writes to the other core and then awaits a response. A timer is started before the core write to the remote address and stopped after it received an answer. 
 
