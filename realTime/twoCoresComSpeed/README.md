@@ -4,27 +4,26 @@ This small example project deals with the inter core communication between two c
 
 The default memory map was assumed (See Figure 10 in Parallella Ref Manual (REV 14.09.09))
 
---- Work in progress --- 
+For each setup 100 runs were performed and the average value was stored (Running just the timer takes 89 cycles)
+It supposed to take 1.5 clock cycles per hop. 
 
-For each setup 15 runs were performed and the average value was stored (Running just the timer takes 89 cycles)
-
-Core0 to Core1: (118-89)/2 = 14,5 cycles (all the same)
-
-Core0 to Core2: (122,2-89)/2 = 16,6 cycles (4 * 127 + 7 * 118 + 2 * 127 + 118 + 127)
-
-Core0 to Core3: (123,4-89)/2 = 17,2 cycles (118 + 127 + 118 + 4 * 127 + 118 + 127 + 118 + 2 * 127 + 2 * 118 + 127)
-
-...
-
-Core0 to Core7:  (127-89)/2 = 19 cycles (all the same) 
-
-...
-
-Core0 to CoreC:  (124-89)/2 = 17,5 cycles (2 * 127 + 2 * 118 + 127 + 2 * 118 + 3 * 127 + 118 + 4 * 127)
-
-...
-
-Core0 to CoreF:  (132,5-89)/2 = 21,75 cycles (136 + 2 * 127 + 3 * 136 + 127 + 2 * 136 + 128 + 2* 136 + 128 + 136 + 127)
+| From Core0 to | Clock Cycles	| -11,5			| Estimation	|
+| ------------- | ------------- | ------------- | ------------- |
+| Core1			| 14,5			| 3				| 2*1.5 = 3		|
+| Core2			| 15,895		| 4,395			| 3*1.5 = 4,5	|
+| Core3			| 17,20			| 5,7			| 4*1.5 = 6		|
+| Core4			| 14,58			| 3,08			| 2*1.5 = 3		|
+| Core5			| 16,03			| 4,53			| 3*1.5 = 4,5	|
+| Core6			| 17,555		| 6,05			| 4*1.5 = 6		|
+| Core7			| 19			| 7,5			| 5*1.5 = 7,5	|
+| Core8			| 15,85			| 4,35			| 3*1.5 = 4,5	|
+| Core9			| 17,29			| 5,79			| 4*1.5 = 6		|
+| CoreA			| 19,14			| 7,64			| 5*1.5 = 7,5	|
+| CoreB			| 20,12			| 8,62			| 6*1.5 = 9		|
+| CoreC			| 17,47			| 5,97			| 4*1.5 = 6		|
+| CoreD			| 19,095		| 7,595			| 5*1.5 = 7,5	|
+| CoreE			| 20,045		| 8,54			| 6*1.5 = 9		|
+| CoreF			| 21,74			| 10,24			| 7*1.5 = 10,5	|
 
 
 
