@@ -30,7 +30,7 @@ int main(void) {
 	time = timerValStart - timerValStop;
 	
     // Write message:
-	sprintf(outbuffer, "Clock cycles to send and receive: %u",time);
+	sprintf(outbuffer, "%u",time);
     return 0;
 }
 
