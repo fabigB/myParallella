@@ -38,13 +38,13 @@ int main()
 	    e_get_platform_info(&epiphany_config);
 
 		e_open(&dev,0,0,4,4);
-
-		for(i = 0; i < 100; i++) {        		
+		printf("Writing to Cores\n");
+//		for(i = 0; i < 100; i++) {        		
 			// Perform soft reset of the created work group
 			e_reset_group(&dev);
 
 	  		// Load the two epiphany programs
-			feedback = e_load("e_App_2.elf",&dev,0,1,E_TRUE);
+			feedback = e_load("e_App_2.elf",&dev,3,3,E_TRUE);
 		    if (feedback != E_OK)
 		    {
 		            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:1 \n", feedback);
@@ -64,15 +64,15 @@ int main()
 		    printf("Result: %s\n", message);
 			sscanf(message, "%d", &m);
 			average += m;
-		}
+	//	}
 			// Close work group and free allocated resources. 
 		    e_close(&dev);
 		    
 		    // release resources allocated by e_init        
 		    e_finalize();
 
-		average = average/i;
-		printf("Average: %f\n",(average-89)/2 );
+//		average = average/i;
+//		printf("Average: %f\n",(average-89)/2 );
 
         return 0;
 }
