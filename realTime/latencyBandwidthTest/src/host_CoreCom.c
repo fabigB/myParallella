@@ -58,12 +58,15 @@ int main() {
 		e_start(&dev,0,0);
 
 	    // Wait for target to finish:
-	    usleep(1000);
+	    usleep(100000);
 		// Read data of length of the buffer from the work group to local buffer
 	    e_read(&dev,0,0,0x3000, &message, 64);
 	    fprintf(stderr, "Result: %s\n", message);
-		sscanf(message, "%d", &m);
-		average += m;
+		e_read(&dev,3,3,0x3000, &message, 64);
+	    fprintf(stderr, "From F: %s\n", message);
+
+//		sscanf(message, "%d", &m);
+//		average += m;
 //	}
 		// Close work group and free allocated resources. 
 	    e_close(&dev);
