@@ -17,7 +17,7 @@ int main(void) {
 	*myX = 0;
 
 	myTemp = (int *) 0x4FFC;
-	sprintf(outbuffer, "1 = ",myTemp);
+	sprintf(outbuffer, "1 = %d",*myTemp);
 	//Set up timer:
 	timerValStart = e_ctimer_set(E_CTIMER_0,  E_CTIMER_MAX);
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);

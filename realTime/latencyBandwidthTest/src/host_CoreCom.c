@@ -22,13 +22,11 @@ int main() {
     e_return_stat_t feedback;
 
 
-	fprintf(stderr,"Creating data which is the size: %d\n",sizeof(data));
 	/*******Create Data**********/
 	for(i = 0; i < DATA_SIZE-1; i++) {
 		data[i] = i+2;
 	}
-	fprintf(stderr,"Done with creating data\n");
-	data[i-1] = 1;
+	data[i] = 1;
 	
 	/*********Epiphany set up***********/
     // Initialize the system:       
@@ -50,13 +48,14 @@ int main() {
 	    {
 	            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:1 \n", feedback);
 	    }
-		usleep(100);
-		e_write(&dev,0,0,0x4000, &data, sizeof(data));		
-		feedback = e_load("e_App_1.elf",&dev,0,0,E_TRUE);
+		usleep(100);	
+		feedback = e_load("e_App_1.elf",&dev,0,0,E_FALSE);
 	    if (feedback != E_OK)
 	    {
 	            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:0 \n", feedback);
 	    }
+		e_write(&dev,0,0,0x4000, &data, sizeof(data));	
+		e_start(&dev,0,0);
 
 	    // Wait for target to finish:
 	    usleep(1000);
