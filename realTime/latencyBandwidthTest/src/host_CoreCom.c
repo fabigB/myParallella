@@ -23,13 +23,13 @@ int main() {
     e_return_stat_t feedback;
 
 
-	printf("Creating random data");
+	fprintf(stderr,"Creating random data\n");
 	/*******Create Random Data**********/
 	for(i = 0; i < sizeof(random)-1; i++) {
 		srand(time(NULL));
 		random[i] = rand();
 	}
-	printf("Done with random data");
+	fprintf(stderr,"Done with random data\n");
 	random[i-1] = 1;
 	
 	/*********Epiphany set up***********/
@@ -41,7 +41,7 @@ int main() {
     e_get_platform_info(&epiphany_config);
 
 	e_open(&dev,0,0,4,4);
-	printf("Writing to Cores\n");
+	fprintf(stderr,"Writing to Cores\n");
 //		for(i = 0; i < 100; i++) {        		
 		// Perform soft reset of the created work group
 		e_reset_group(&dev);
@@ -64,7 +64,7 @@ int main() {
 	    usleep(1000);
 		// Read data of length of the buffer from the work group to local buffer
 	    e_read(&dev,0,0,0x3000, &message, 64);
-	    printf("Result: %s\n", message);
+	    fprintf(stderr, "Result: %s\n", message);
 		sscanf(message, "%d", &m);
 		average += m;
 //	}
