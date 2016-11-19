@@ -23,7 +23,7 @@ int main(void) {
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);
 
 	//Write to core F using the DMA (dst,src,bytes)
-	e_dma_copy((int *)ptr_adr_coreF,(int *)0x4000,1024*sizeof(int));
+	e_dma_copy((int *)0x8cb4000,(int *)0x4000,1024*sizeof(int));
 
 	//Wait for answer!
 	while(*myX == 0);
