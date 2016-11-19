@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
 
 #include "e-hal.h"
 
@@ -9,7 +7,7 @@ int main() {
     /************Variable declaration*************/
     unsigned col;
     char message[64];
-	int random[1024];
+	int data[1024];
 	char appNameBuf[32];
 	int i,m=0;
 	double average;
@@ -23,14 +21,13 @@ int main() {
     e_return_stat_t feedback;
 
 
-	fprintf(stderr,"Creating random data\n");
-	/*******Create Random Data**********/
-	for(i = 0; i < sizeof(random)-1; i++) {
-		srand(time(NULL));
-		random[i] = rand();
+	fprintf(stderr,"Creating data data\n");
+	/*******Create Data**********/
+	for(i = 0; i < sizeof(data)-1; i++) {
+		data[i] = i+2;
 	}
-	fprintf(stderr,"Done with random data\n");
-	random[i-1] = 1;
+	fprintf(stderr,"Done with data data\n");
+	data[i-1] = 1;
 	
 	/*********Epiphany set up***********/
     // Initialize the system:       
@@ -53,7 +50,7 @@ int main() {
 	            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:1 \n", feedback);
 	    }
 		usleep(100);
-		e_write(&dev,0,0,0x4000, &random, sizeof(random));		
+		e_write(&dev,0,0,0x4000, &data, sizeof(data));		
 		feedback = e_load("e_App_1.elf",&dev,0,0,E_TRUE);
 	    if (feedback != E_OK)
 	    {
