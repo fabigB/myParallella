@@ -2,12 +2,13 @@
 
 #include "e-hal.h"
 
+#define DATA_SIZE 1024
 
 int main() {
     /************Variable declaration*************/
     unsigned col;
     char message[64];
-	int data[1024];
+	int data[DATA_SIZE];
 	char appNameBuf[32];
 	int i,m=0;
 	double average;
@@ -21,12 +22,12 @@ int main() {
     e_return_stat_t feedback;
 
 
-	fprintf(stderr,"Creating data data\n");
+	fprintf(stderr,"Creating data which is the size: %d\n",sizeof(data));
 	/*******Create Data**********/
-	for(i = 0; i < sizeof(data)-1; i++) {
+	for(i = 0; i < DATA_SIZE-1; i++) {
 		data[i] = i+2;
 	}
-	fprintf(stderr,"Done with data data\n");
+	fprintf(stderr,"Done with creating data\n");
 	data[i-1] = 1;
 	
 	/*********Epiphany set up***********/
