@@ -62,8 +62,6 @@ int main() {
 		// Read data of length of the buffer from the work group to local buffer
 	    e_read(&dev,0,0,0x3000, &message, 64);
 	    fprintf(stderr, "Result: %s\n", message);
-		e_read(&dev,3,3,0x3000, &message, 64);
-	    fprintf(stderr, "From F: %s\n", message);
 
 //		sscanf(message, "%d", &m);
 //		average += m;
