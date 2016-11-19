@@ -22,7 +22,7 @@ int main(void) {
 	timerValStart = e_ctimer_set(E_CTIMER_0,  E_CTIMER_MAX);
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);
 
-	//Write to core F using the DMA
+	//Write to core F using the DMA (dst,src,bytes)
 	e_dma_copy((int *)ptr_adr_coreF,(int *)0x4000,1024*sizeof(int));
 
 	//Wait for answer!

@@ -46,7 +46,7 @@ int main() {
 		feedback = e_load("e_App_2.elf",&dev,3,3,E_TRUE);
 	    if (feedback != E_OK)
 	    {
-	            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:1 \n", feedback);
+	            fprintf(stderr,"Error (%i) while loading application to core in row: 3 col:3 \n", feedback);
 	    }
 		usleep(100);	
 		feedback = e_load("e_App_1.elf",&dev,0,0,E_FALSE);
