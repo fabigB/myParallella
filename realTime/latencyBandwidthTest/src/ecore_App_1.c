@@ -25,11 +25,12 @@ int main(void) {
 	myX = (int *) ptr_adr_mycore;
 	*myX = 0;
 
+	e_barrier(bar_array,tgt_bar_array);
+
 	//Set up timer:
 	timerValStart = e_ctimer_set(E_CTIMER_0,  E_CTIMER_MAX);
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);
 
-	e_barrier(bar_array,tgt_bar_array);
 	//Write to core F using the DMA (dst,src,bytes)
 	if (coreid == 0x808) //Core 0
 		e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
