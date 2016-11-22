@@ -34,8 +34,12 @@ int main(void) {
 	//Write to core F using the DMA (dst,src,bytes)
 	if (coreid == 0x808) //Core 0
 		e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
-	else //Core 2
-		e_dma_copy((int *) ptr_adr_core6, (int *)0x4000, 1024*sizeof(int));
+	else if (coreid == 0x809) {//Core 2
+		e_dma_copy((int *) ptr_adr_core5, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_core9, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_coreD, (int *)0x4000, 1024*sizeof(int));
+		sprintf(outbuffer, "0x%x",coreid);
+	}
 	
 	//Wait for answer!
 	while(*myX == 0);

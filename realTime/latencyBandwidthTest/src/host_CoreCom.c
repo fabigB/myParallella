@@ -73,6 +73,9 @@ int main() {
 	    e_read(&dev1,0,0,0x3000, &message, 64);
 	    fprintf(stderr, "Result: %s\n", message);
 
+	    e_read(&dev1,0,1,0x3000, &message, 64);
+	    fprintf(stderr, "Result: %s\n", message);
+
 		sscanf(message, "%d", &m);
 		average += m;
 	}
