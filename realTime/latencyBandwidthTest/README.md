@@ -1,9 +1,19 @@
 # Comparing communication latency and bandwith  between two cores using DMA communication 
 
----WORK in progress---
-This small example project deals with the inter core communication between two cores distributed somewhere on the chip. One core writes to the other core and then awaits a response. A timer is started before the core write to the remote address and stopped after it received an answer. 
+This small example project deals with the inter core communication between two cores. Core 0 in is placed in the left top most corner and core F is placed in the botom right most corner. Resulting in the longest path. Core 0 writes to the other core using a DMA transfer and then awaits a response. A timer is started before the core write to the remote address and stopped after it received an answer. The DMA can potentialy support 64 Bits per cycle. 
 
-The default memory map was assumed (See Figure 10 in Parallella Ref Manual (REV 14.09.09))
+Including the response from F to 0 (22 cycles); Timer: 90 Clock cycles and communication overhead 
+| Data (INTS)	| Bits			| Clock cylcles	| 
+| ------------- | ------------- | ------------- | 
+| 1024			| 32.768		| 2044			| 
+| 512			| 16.384		| 1186			| 
+| 128			| 4096			| 649			| 
+| 2				| 64			| 436			| 
+
+---WORK in progress---
+
+
+
 
 For each setup 100 runs were performed and the average value was stored (Running just the timer takes 89 cycles)
 It supposed to take 1.5 clock cycles per hop. 
@@ -27,6 +37,7 @@ It supposed to take 1.5 clock cycles per hop.
 | CoreF			| 21,74			| 10,24			| 7*1.5 = 10,5	|
 
 
+The default memory map was assumed (See Figure 10 in Parallella Ref Manual (REV 14.09.09))
 
 It was tested on a headless parallella destkop board running the (Epiphany toolchain 2016.3.1) 5.2.0
 

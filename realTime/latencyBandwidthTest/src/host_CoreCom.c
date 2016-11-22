@@ -38,7 +38,7 @@ int main() {
 
 	e_open(&dev,0,0,4,4);
 	fprintf(stderr,"Writing to Cores\n");
-//		for(i = 0; i < 100; i++) {        		
+		for(i = 0; i < 100; i++) {        		
 		// Perform soft reset of the created work group
 		e_reset_group(&dev);
 
@@ -61,19 +61,19 @@ int main() {
 	    usleep(100000);
 		// Read data of length of the buffer from the work group to local buffer
 	    e_read(&dev,0,0,0x3000, &message, 64);
-	    fprintf(stderr, "Result: %s\n", message);
+	    //fprintf(stderr, "Result: %s\n", message);
 
-//		sscanf(message, "%d", &m);
-//		average += m;
-//	}
+		sscanf(message, "%d", &m);
+		average += m;
+	}
 		// Close work group and free allocated resources. 
 	    e_close(&dev);
 	    
 	    // release resources allocated by e_init        
 	    e_finalize();
 
-//		average = average/i;
-//		printf("Average: %f\n",(average-89)/2 );
+		average = average/i;
+		printf("Average: %f\n",(average-89)/2 );
 
     return 0;
 }
