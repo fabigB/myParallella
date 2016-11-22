@@ -38,7 +38,6 @@ int main(void) {
 		e_dma_copy((int *) ptr_adr_core5, (int *)0x4000, 1024*sizeof(int));
 		e_dma_copy((int *) ptr_adr_core9, (int *)0x4000, 1024*sizeof(int));
 		e_dma_copy((int *) ptr_adr_coreD, (int *)0x4000, 1024*sizeof(int));
-		sprintf(outbuffer, "0x%x",coreid);
 	}
 	
 	//Wait for answer!
