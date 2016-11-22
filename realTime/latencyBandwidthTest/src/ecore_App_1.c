@@ -34,29 +34,13 @@ int main(void) {
 	//Write to core F using the DMA (dst,src,bytes)
 	if (coreid == 0x808) { //Core 0
 		// Set up remote address
-		for(i = 0; i < DATA_SIZE; i++) {
-			remote = (int *) (ptr_adr_coreF + i*sizeof(int));
-			local = (int * ) (0x4000 + i*sizeof(int));
-			*remote = *local; 		
-		}	
-		//e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
+		e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
 	}
 	else if (coreid == 0x809) {//Core 1
-		for(i = 0; i < DATA_SIZE; i++) {
-			remote = (int *) (ptr_adr_core2 + i*sizeof(int));
-			local = (int * ) (0x4000 + i);
-			*remote = *local; 		
-			remote = (int *) (ptr_adr_core3 + i*sizeof(int));
-			*remote = *local; 
-			remote = (int *) (ptr_adr_core7 + i*sizeof(int));
-			*remote = *local; 
-			remote = (int *) (ptr_adr_coreB + i*sizeof(int));
-			*remote = *local; 
-		}	
-		//e_dma_copy((int *) ptr_adr_core2, (int *)0x4000, 1024*sizeof(int));
-		//e_dma_copy((int *) ptr_adr_core3, (int *)0x4000, 1024*sizeof(int));
-		//e_dma_copy((int *) ptr_adr_core7, (int *)0x4000, 1024*sizeof(int));
-		//e_dma_copy((int *) ptr_adr_coreB, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_core2, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_core3, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_core7, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_coreB, (int *)0x4000, 1024*sizeof(int));
 	}
 	
 	//Wait for answer!
