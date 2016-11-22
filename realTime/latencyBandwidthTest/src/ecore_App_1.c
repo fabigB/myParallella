@@ -29,9 +29,9 @@ int main(void) {
 	timerValStart = e_ctimer_set(E_CTIMER_0,  E_CTIMER_MAX);
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);
 
-//	e_barrier(bar_array,tgt_bar_array);
+	e_barrier(bar_array,tgt_bar_array);
 	//Write to core F using the DMA (dst,src,bytes)
-	if (coreid == 0x88807fd6) //Core 0
+	if (coreid == 0x808) //Core 0
 		e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
 	else //Core 2
 		e_dma_copy((int *) ptr_adr_core6, (int *)0x4000, 1024*sizeof(int));

@@ -37,16 +37,16 @@ int main() {
     // Get platform specific configuration, number of devices, external memory, ...
     e_get_platform_info(&epiphany_config);
 
-	e_open(&dev1,0,0,0,2);
-	e_open(&dev2,0,0,0,2);
+	e_open(&dev1,0,0,1,2);
+	e_open(&dev2,3,3,1,1);
 	fprintf(stderr,"Writing to Cores\n");
-		for(i = 0; i < 5; i++) {        		
+		for(i = 0; i < 50; i++) {        		
 		// Perform soft reset of the created work group
 		e_reset_group(&dev1);
 		e_reset_group(&dev2);
 
   		// Load the two epiphany programs
-		feedback = e_load("e_App_2.elf",&dev2,3,3,E_TRUE);
+		feedback = e_load("e_App_2.elf",&dev2,0,0,E_TRUE);
 	    if (feedback != E_OK)
 	    {
 	            fprintf(stderr,"Error (%i) while loading application 2 to core in row: 3 col:3 \n", feedback);
