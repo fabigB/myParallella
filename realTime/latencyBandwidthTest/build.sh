@@ -19,4 +19,3 @@ ${CROSS_PREFIX}gcc src/host_CoreCom.c -o debug/hostCom.elf -I ${EINCS} -L ${ELIB
 # Build DEVICE side program
 e-gcc -T ${ELDF} src/ecore_App_1.c -o debug/e_App_1.elf -le-lib
 e-gcc -T ${ELDF} src/ecore_App_2.c -o debug/e_App_2.elf -le-lib
-e-gcc -T ${ELDF} src/ecore_App_3.c -o debug/e_App_3.elf -le-lib
