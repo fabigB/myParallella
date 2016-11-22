@@ -2,6 +2,7 @@
 
 This small example project deals with the inter core communication between two cores. Core 0 in is placed in the left top most corner and core F is placed in the botom right most corner. Resulting in the longest path. Core 0 writes to the other core using a DMA transfer and then awaits a response. A timer is started before the core write to the remote address and stopped after it received an answer. The DMA can potentialy support 64 Bits per cycle. 
 
+
 Including the response from F to 0 (22 cycles); Timer: 90 Clock cycles and communication overhead 
 | Data (INTS)	| Bits			| Clock cylcles	| 
 | ------------- | ------------- | ------------- | 
@@ -11,8 +12,8 @@ Including the response from F to 0 (22 cycles); Timer: 90 Clock cycles and commu
 | 2				| 64			| 436			| 
 
 ---WORK in progress---
-
-
+From 0 to F 1024 Ints
+174.177.496 cycles
 
 
 For each setup 100 runs were performed and the average value was stored (Running just the timer takes 89 cycles)
