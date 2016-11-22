@@ -10,14 +10,15 @@ int main(void) {
 	int *myX;
 	unsigned timerValStart, timerValStop, time;
 
-    // Variable deceleration for the core id
+/*    // Variable deceleration for the core id
     e_coreid_t coreid;
     coreid = e_get_coreid();
 
 	volatile e_barrier_t bar_array[NUM_CORES]; 
 	volatile e_barrier_t *tgt_bar_array[NUM_CORES]; 
     e_barrier_init(bar_array,tgt_bar_array);
-
+*/
+	
 	outbuffer = (char *) 0x3000;
 
 	// Set up addresses and set local variable to 0:
@@ -28,12 +29,12 @@ int main(void) {
 	timerValStart = e_ctimer_set(E_CTIMER_0,  E_CTIMER_MAX);
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);
 
-	e_barrier(bar_array,tgt_bar_array);
+//	e_barrier(bar_array,tgt_bar_array);
 	//Write to core F using the DMA (dst,src,bytes)
-	if (coreid == 0x808) //Core 0
+//	if (coreid == 0x88807fd6) //Core 0
 		e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
-	if (coreid == 0x80a) //Core 2
-		e_dma_copy((int *) ptr_adr_core6, (int *)0x4000, 1024*sizeof(int));
+//	else //Core 2
+//		e_dma_copy((int *) ptr_adr_core6, (int *)0x4000, 1024*sizeof(int));
 	
 	//Wait for answer!
 	while(*myX == 0);

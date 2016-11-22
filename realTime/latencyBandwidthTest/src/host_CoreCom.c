@@ -38,7 +38,7 @@ int main() {
 
 	e_open(&dev,0,0,4,4);
 	fprintf(stderr,"Writing to Cores\n");
-		for(i = 0; i < 50; i++) {        		
+		for(i = 0; i < 5; i++) {        		
 		// Perform soft reset of the created work group
 		e_reset_group(&dev);
 
@@ -46,29 +46,30 @@ int main() {
 		feedback = e_load("e_App_2.elf",&dev,3,3,E_TRUE);
 	    if (feedback != E_OK)
 	    {
-	            fprintf(stderr,"Error (%i) while loading application to core in row: 3 col:3 \n", feedback);
+	            fprintf(stderr,"Error (%i) while loading application 2 to core in row: 3 col:3 \n", feedback);
 	    }
 		usleep(100);	
 		feedback = e_load("e_App_1.elf",&dev,0,0,E_FALSE);
 	    if (feedback != E_OK)
 	    {
-	            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:0 \n", feedback);
+	            fprintf(stderr,"Error (%i) while loading application 1 to core in row: 0 col:0 \n", feedback);
 	    }
-		feedback = e_load("e_App_1.elf",&dev,0,2,E_FALSE);
+		feedback = e_load("e_App_3.elf",&dev,0,2,E_FALSE);
 	    if (feedback != E_OK)
 	    {
-	            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:0 \n", feedback);
+	            fprintf(stderr,"Error (%i) while loading application 3 to core in row: 0 col:2 \n", feedback);
 	    }
 		e_write(&dev,0,0,0x4000, &data, sizeof(data));	
 		e_write(&dev,0,2,0x4000, &data, sizeof(data));	
-		e_start(&dev,0,2);		
 		e_start(&dev,0,0);
+		e_start(&dev,0,2);		
+
 
 	    // Wait for target to finish:
 	    usleep(100000);
 		// Read data of length of the buffer from the work group to local buffer
 	    e_read(&dev,0,0,0x3000, &message, 64);
-	    //fprintf(stderr, "Result: %s\n", message);
+	    fprintf(stderr, "Result: %s\n", message);
 
 		sscanf(message, "%d", &m);
 		average += m;
