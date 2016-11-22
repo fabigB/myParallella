@@ -7,7 +7,7 @@
 
 int main(void) {
 	char *outbuffer;
-	int *myX;
+	int *myX, *remote, *local;
 	unsigned timerValStart, timerValStop, time;
 
     // Variable deceleration for the core id
@@ -31,13 +31,20 @@ int main(void) {
 	e_ctimer_start(E_CTIMER_0,E_CTIMER_CLK);
 
 	//Write to core F using the DMA (dst,src,bytes)
-	if (coreid == 0x808) //Core 0
-		e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
+	if (coreid == 0x808) { //Core 0
+		// Set up remote address
+		for(int i = 0; i < DATA_SIZE; i++) {
+			remote = (int *) ptr_adr_coreF + i*sizeof(int);
+			local = (int * ) 0x4000 + i*sizeof(int);
+			*remote = *local; 		
+		}	
+		//e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
+	}
 	else if (coreid == 0x809) {//Core 1
-		e_dma_copy((int *) ptr_adr_core2, (int *)0x4000, 1024*sizeof(int));
-		e_dma_copy((int *) ptr_adr_core3, (int *)0x4000, 1024*sizeof(int));
-		e_dma_copy((int *) ptr_adr_core7, (int *)0x4000, 1024*sizeof(int));
-		e_dma_copy((int *) ptr_adr_coreB, (int *)0x4000, 1024*sizeof(int));
+		//e_dma_copy((int *) ptr_adr_core2, (int *)0x4000, 1024*sizeof(int));
+		//e_dma_copy((int *) ptr_adr_core3, (int *)0x4000, 1024*sizeof(int));
+		//e_dma_copy((int *) ptr_adr_core7, (int *)0x4000, 1024*sizeof(int));
+		//e_dma_copy((int *) ptr_adr_coreB, (int *)0x4000, 1024*sizeof(int));
 	}
 	
 	//Wait for answer!

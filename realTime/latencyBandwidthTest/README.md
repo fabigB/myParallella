@@ -5,9 +5,9 @@ This small example project deals with the inter core communication between two c
 Including the response from F to 0 (22 cycles); Timer: 90 Clock cycles and communication overhead 
 | Data (INTS)	| Bits			| Clock cylcles	| 
 | ------------- | ------------- | ------------- | 
-| 1024			| 32.768		| 2044			| 
-| 512			| 16.384		| 1186			| 
-| 128			| 4096			| 649			| 
+| 1024			| 32.768 (4 kB)	| 2044			| 
+| 512			| 16.384 (2 kB)	| 1186			| 
+| 128			| 4096 (0,5 kB)	| 649			| 
 | 2				| 64			| 436			| 
 
 ---WORK in progress---
