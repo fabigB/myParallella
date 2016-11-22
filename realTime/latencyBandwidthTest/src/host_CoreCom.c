@@ -9,6 +9,7 @@ int main() {
     unsigned col;
     char message[64];
 	int data[DATA_SIZE];
+	int data2[DATA_SIZE];
 	char appNameBuf[32];
 	int i,m=0;
 	double average;
@@ -26,6 +27,7 @@ int main() {
 	/*******Create Data**********/
 	for(i = 0; i < DATA_SIZE-1; i++) {
 		data[i] = i+2;
+		data2[i] = 1234;
 	}
 	data[i] = 1;
 	
@@ -63,12 +65,12 @@ int main() {
 	            fprintf(stderr,"Error (%i) while loading application 1 to core in row: 0 col:1 \n", feedback);
 	    }
 		e_write(&dev1,0,0,0x4000, &data, sizeof(data));	
-		e_write(&dev1,0,1,0x4000, &data, sizeof(data));	
+		e_write(&dev1,0,1,0x4000, &data2, sizeof(data2));	
 		e_start_group(&dev1);	
 
 
 	    // Wait for target to finish:
-	    usleep(1000000);
+	    usleep(100000);
 		// Read data of length of the buffer from the work group to local buffer
 	    e_read(&dev1,0,0,0x3000, &message, 64);
 	    fprintf(stderr, "Result: %s\n", message);
