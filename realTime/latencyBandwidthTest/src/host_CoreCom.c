@@ -38,7 +38,7 @@ int main() {
 
 	e_open(&dev,0,0,4,4);
 	fprintf(stderr,"Writing to Cores\n");
-		for(i = 0; i < 100; i++) {        		
+		for(i = 0; i < 50; i++) {        		
 		// Perform soft reset of the created work group
 		e_reset_group(&dev);
 
@@ -54,7 +54,14 @@ int main() {
 	    {
 	            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:0 \n", feedback);
 	    }
+		feedback = e_load("e_App_1.elf",&dev,0,2,E_FALSE);
+	    if (feedback != E_OK)
+	    {
+	            fprintf(stderr,"Error (%i) while loading application to core in row: 0 col:0 \n", feedback);
+	    }
 		e_write(&dev,0,0,0x4000, &data, sizeof(data));	
+		e_write(&dev,0,2,0x4000, &data, sizeof(data));	
+		e_start(&dev,0,2);		
 		e_start(&dev,0,0);
 
 	    // Wait for target to finish:
@@ -73,7 +80,7 @@ int main() {
 	    e_finalize();
 
 		average = average/i;
-		printf("Average: %f\n",(average-89)/2 );
+		printf("Average: %f\n",average );
 
     return 0;
 }
