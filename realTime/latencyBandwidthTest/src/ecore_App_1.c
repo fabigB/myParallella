@@ -18,7 +18,6 @@ int main(void) {
 	volatile e_barrier_t *tgt_bar_array[NUM_CORES]; 
     e_barrier_init(bar_array,tgt_bar_array);
 
-	
 	outbuffer = (char *) 0x3000;
 
 	// Set up addresses and set local variable to 0:
@@ -34,10 +33,11 @@ int main(void) {
 	//Write to core F using the DMA (dst,src,bytes)
 	if (coreid == 0x808) //Core 0
 		e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
-	else if (coreid == 0x809) {//Core 2
-		e_dma_copy((int *) ptr_adr_core5, (int *)0x4000, 1024*sizeof(int));
-		e_dma_copy((int *) ptr_adr_core9, (int *)0x4000, 1024*sizeof(int));
-		e_dma_copy((int *) ptr_adr_coreD, (int *)0x4000, 1024*sizeof(int));
+	else if (coreid == 0x809) {//Core 1
+		e_dma_copy((int *) ptr_adr_core2, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_core3, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_core7, (int *)0x4000, 1024*sizeof(int));
+		e_dma_copy((int *) ptr_adr_coreB, (int *)0x4000, 1024*sizeof(int));
 	}
 	
 	//Wait for answer!
