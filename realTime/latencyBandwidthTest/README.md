@@ -5,10 +5,10 @@ This small example project deals with the inter core communication between two c
 Sending Data from core 0 to F including the response from F to 0 (approx 22 cycles); Timer: 89 Clock cycles and communication overhead 
 | Data (INTS)	| Bits			| Clock cylcles	| 
 | ------------- | ------------- | ------------- | 
-| 1024			| 32.768 (4 kB)	| 2044			| 
-| 512			| 16.384 (2 kB)	| 1186			| 
-| 128			| 4096 (0,5 kB)	| 649			| 
-| 2				| 64			| 436			| 
+| 1024			| 32.768 (4 kB)	| 2066			| 
+| 512			| 16.384 (2 kB)	| 1199			| 
+| 128			| 4096 (0,5 kB)	| 657			| 
+| 2				| 64			| 443			| 
 
 
 Sending Data from core 0 to 3 including the response from 3 to 0 (approx 18 cycles); Timer: 89 Clock cycles and communication overhead 
@@ -19,7 +19,7 @@ Sending Data from core 0 to 3 including the response from 3 to 0 (approx 18 cycl
 | 128			| 4096 (0,5 kB)	| 657			| 
 | 2				| 64			| 443			|
 
-Influence of other cores sending data:
+Influence of other cores sending data. The initial setup was taken again where core 0 sends data to core F. Adding different DMA copy instructions to see how the speed of the writing of the data can be manipulated:
 
 | Adding				| kB			| Clock cylcles	| 
 | --------------------- | ------------- | ------------- | 
