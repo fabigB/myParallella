@@ -2,7 +2,7 @@
 
 #include "e-hal.h"
 
-#define DATA_SIZE 2048 //1024
+#define DATA_SIZE 1024
 
 int main() {
     /************Variable declaration*************/
@@ -64,6 +64,17 @@ int main() {
 	    {
 	            fprintf(stderr,"Error (%i) while loading application 1 to core in row: 0 col:1 \n", feedback);
 	    }
+      feedback = e_load("e_App_1.elf",&dev1,0,2,E_FALSE);
+  	  if (feedback != E_OK)
+  	  {
+  	            fprintf(stderr,"Error (%i) while loading application 1 to core in row: 0 col:1 \n", feedback);
+  	  }
+      feedback = e_load("e_App_1.elf",&dev1,0,3,E_FALSE);
+      if (feedback != E_OK)
+      {
+                fprintf(stderr,"Error (%i) while loading application 1 to core in row: 0 col:1 \n", feedback);
+      }
+
 		e_write(&dev1,0,0,0x4000, &data, sizeof(data));
 		e_write(&dev1,0,1,0x4000, &data2, sizeof(data2));
 		e_start_group(&dev1);

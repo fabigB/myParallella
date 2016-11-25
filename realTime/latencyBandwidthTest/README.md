@@ -4,20 +4,20 @@ This small example project deals with the inter core communication between two c
 
 Sending Data from core 0 to F including the response from F to 0 (approx 22 cycles); Timer: 89 Clock cycles and communication overhead
 
+| Data (INTS)	| Bits			| Clock cycles	| Clock cycles -overhead | MB/s  |
+| ----------- | --------- | ------------- | ---------------------- | ----- |
+| 2048    | 65.536 (8 kB) | 3794          | 3638  | 1288  |
+| 1024		| 32.768 (4 kB)	| 2066			    | 1955  | 1198  |
+| 512			| 16.384 (2 kB)	| 1199			    | 1088  | 1077  |
+| 128			| 4096 (0,5 kB)	| 657     			| 546   | 536   |
+| 2				| 64			      | 443			      | 332   | -     |
+
+
+Sending Data from core 0 to 3 including the response from 3 to 0 (approx 18 cycles); Timer: 89 Clock cycles and communication overhead. Same numbers ...
+
 | Data (INTS)	| Bits			| Clock cycles	|
 | ----------- | --------- | ------------- |
-| 2048    | 65.536 (8 kB) |               |
-| 1024		| 32.768 (4 kB)	| 2066			    |
-| 512			| 16.384 (2 kB)	| 1199			    |
-| 128			| 4096 (0,5 kB)	| 657     			|
-| 2				| 64			      | 443			      |
-
-
-Sending Data from core 0 to 3 including the response from 3 to 0 (approx 18 cycles); Timer: 89 Clock cycles and communication overhead
-
-| Data (INTS)	| Bits			| Clock cycles	|
-| ----------- | --------- | ------------- |
-| 2048    | 65.536 (8 kB) |               |
+| 2048    | 65.536 (8 kB) | 3794          |
 | 1024		| 32.768 (4 kB)	| 2066			    |
 | 512			| 16.384 (2 kB)	| 1199			    |
 | 128			| 4096 (0,5 kB)	| 657     			|

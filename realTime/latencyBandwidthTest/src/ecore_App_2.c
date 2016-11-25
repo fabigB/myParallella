@@ -8,7 +8,7 @@ int main(void) {
 	int *myX, *remoteX;
 
 	// Set up addresses and set local variable to 0:
-	myX = (int *) 0x5FFC;//0x4FFC; //1023*sizeof(int) = FFC hex + 4000;
+	myX = (int *) 0x4FFC; //1023*sizeof(int) = FFC hex + 4000;
 	remoteX = (int *) ptr_adr_core0;
 	*myX = 0;
 
