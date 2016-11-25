@@ -8,8 +8,10 @@ int main() {
     /************Variable declaration*************/
     unsigned col;
     char message[64];
-	int data[DATA_SIZE];
+	int data0[DATA_SIZE];
+  int data1[DATA_SIZE];
 	int data2[DATA_SIZE];
+  int data3[DATA_SIZE];
 	char appNameBuf[32];
 	int i,m=0;
 	double average;
@@ -25,11 +27,13 @@ int main() {
 
 
 	/*******Create Data**********/
-	for(i = 0; i < DATA_SIZE-1; i++) {
-		data[i] = i+2;
+	for(i = 0; i < DATA_SIZE; i++) {
+		data0[i] = i+2;
+    data1[i] = i*2;
 		data2[i] = 1234+i;
+    data3[i] = i%147;
 	}
-	data[i] = 1;
+	data0[i-1] = 1;
 
 	/*********Epiphany set up***********/
     // Initialize the system:
@@ -75,10 +79,10 @@ int main() {
                 fprintf(stderr,"Error (%i) while loading application 1 to core in row: 0 col:1 \n", feedback);
       }
 
-		e_write(&dev1,0,0,0x4000, &data, sizeof(data));
-		e_write(&dev1,0,1,0x4000, &data2, sizeof(data2));
+		e_write(&dev1,0,0,0x4000, &data0, sizeof(data0));
+		e_write(&dev1,0,1,0x4000, &data1, sizeof(data1));
     e_write(&dev1,0,2,0x4000, &data2, sizeof(data2));
-    e_write(&dev1,0,3,0x4000, &data2, sizeof(data2));
+    e_write(&dev1,0,3,0x4000, &data3, sizeof(data3));
 		e_start_group(&dev1);
 
 
