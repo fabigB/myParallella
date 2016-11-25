@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#define DATA_SIZE 1024
+#define DATA_SIZE 2048//1024
 #define NUM_CORES 2
 
 #define ptr_adr_mycore 0x3500

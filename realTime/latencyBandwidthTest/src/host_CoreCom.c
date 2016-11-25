@@ -2,7 +2,7 @@
 
 #include "e-hal.h"
 
-#define DATA_SIZE 1024
+#define DATA_SIZE 2048 //1024
 
 int main() {
     /************Variable declaration*************/
@@ -30,9 +30,9 @@ int main() {
 		data2[i] = 1234;
 	}
 	data[i] = 1;
-	
+
 	/*********Epiphany set up***********/
-    // Initialize the system:       
+    // Initialize the system:
     e_init(NULL);
     // Reset the system:
     e_reset_system();
@@ -42,7 +42,7 @@ int main() {
 	e_open(&dev1,0,0,1,2);
 	e_open(&dev2,3,3,1,1);
 	fprintf(stderr,"Writing to Cores\n");
-		for(i = 0; i < 50; i++) {        		
+		for(i = 0; i < 50; i++) {
 		// Perform soft reset of the created work group
 		e_reset_group(&dev1);
 		e_reset_group(&dev2);
@@ -53,7 +53,7 @@ int main() {
 	    {
 	            fprintf(stderr,"Error (%i) while loading application 2 to core in row: 3 col:3 \n", feedback);
 	    }
-		usleep(100);	
+		usleep(100);
 		feedback = e_load("e_App_1.elf",&dev1,0,0,E_FALSE);
 	    if (feedback != E_OK)
 	    {
@@ -64,9 +64,9 @@ int main() {
 	    {
 	            fprintf(stderr,"Error (%i) while loading application 1 to core in row: 0 col:1 \n", feedback);
 	    }
-		e_write(&dev1,0,0,0x4000, &data, sizeof(data));	
-		e_write(&dev1,0,1,0x4000, &data2, sizeof(data2));	
-		e_start_group(&dev1);	
+		e_write(&dev1,0,0,0x4000, &data, sizeof(data));
+		e_write(&dev1,0,1,0x4000, &data2, sizeof(data2));
+		e_start_group(&dev1);
 
 
 	    // Wait for target to finish:
@@ -78,11 +78,11 @@ int main() {
 		sscanf(message, "%d", &m);
 		average += m;
 	}
-		// Close work group and free allocated resources. 
+		// Close work group and free allocated resources.
 	    e_close(&dev1);
  		e_close(&dev2);
-	    
-	    // release resources allocated by e_init        
+
+	    // release resources allocated by e_init
 	    e_finalize();
 
 		average = average/i;
@@ -90,4 +90,3 @@ int main() {
 
     return 0;
 }
-

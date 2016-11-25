@@ -15,8 +15,8 @@ int main(void) {
     e_coreid_t coreid;
     coreid = e_get_coreid();
 
-	volatile e_barrier_t bar_array[NUM_CORES]; 
-	volatile e_barrier_t *tgt_bar_array[NUM_CORES]; 
+	volatile e_barrier_t bar_array[NUM_CORES];
+	volatile e_barrier_t *tgt_bar_array[NUM_CORES];
     e_barrier_init(bar_array,tgt_bar_array);
 
 	outbuffer = (char *) 0x3000;
@@ -36,22 +36,24 @@ int main(void) {
 		// Set up remote address
 		e_dma_copy((int *) ptr_adr_coreF, (int *)0x4000, DATA_SIZE*sizeof(int));
 	}
-	else if (coreid == 0x809) {//Core 1
-		e_dma_copy((int *) ptr_adr_core2, (int *)0x4000, 1024*sizeof(int));
-		e_dma_copy((int *) ptr_adr_core3, (int *)0x4000, 1024*sizeof(int));
-		e_dma_copy((int *) ptr_adr_core7, (int *)0x4000, 1024*sizeof(int));
+/*	else if (coreid == 0x809) {//Core 1
 		e_dma_copy((int *) ptr_adr_coreB, (int *)0x4000, 1024*sizeof(int));
 	}
-	
+	else if (coreid == 0x80a) {//Core 2
+		e_dma_copy((int *) ptr_adr_core7, (int *)0x4000, 1024*sizeof(int));
+	}
+	else if (coreid == 0x80b) {//Core 3
+		e_dma_copy((int *) ptr_adr_coreB, (int *)0x4000, 1024*sizeof(int));
+	}*/
+
 	//Wait for answer!
 	while(*myX == 0);
 
 	//Stop timer:
 	timerValStop = e_ctimer_stop(E_CTIMER_0);
 	time = timerValStart - timerValStop;
-	
+
     // Write message:
 	sprintf(outbuffer, "%u",time);
     return 0;
 }
-
