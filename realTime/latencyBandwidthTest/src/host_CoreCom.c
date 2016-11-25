@@ -27,7 +27,7 @@ int main() {
 	/*******Create Data**********/
 	for(i = 0; i < DATA_SIZE-1; i++) {
 		data[i] = i+2;
-		data2[i] = 1234;
+		data2[i] = 1234+i;
 	}
 	data[i] = 1;
 
@@ -39,7 +39,7 @@ int main() {
     // Get platform specific configuration, number of devices, external memory, ...
     e_get_platform_info(&epiphany_config);
 
-	e_open(&dev1,0,0,1,2);
+	e_open(&dev1,0,0,1,4);
 	e_open(&dev2,3,3,1,1);
 	fprintf(stderr,"Writing to Cores\n");
 		for(i = 0; i < 50; i++) {
@@ -77,6 +77,8 @@ int main() {
 
 		e_write(&dev1,0,0,0x4000, &data, sizeof(data));
 		e_write(&dev1,0,1,0x4000, &data2, sizeof(data2));
+    e_write(&dev1,0,2,0x4000, &data2, sizeof(data2));
+    e_write(&dev1,0,3,0x4000, &data2, sizeof(data2));
 		e_start_group(&dev1);
 
 
