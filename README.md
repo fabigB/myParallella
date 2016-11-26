@@ -28,7 +28,7 @@ runs 16 cores all incrementing ten times a shared variable x. The use of mutexes
 ## filter:
 runs 16 cores all doing the same filter operation (inverter / sobel) on a picture and storing it back in memory.
 
-## realTime:
-different projects analyzing the speed of the inter core communication and NOC.  
+## nocPerformance:
+different projects analyzing the Performance of the NoC
 
 

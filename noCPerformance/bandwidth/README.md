@@ -1,4 +1,4 @@
-# Bandwidth of the NoC
+# Comparing communication bandwidth  between two cores using DMA communication
 
 This small example project deals with the inter core communication between two cores. Core 0 in is placed in the left top most corner and core F is placed in the bottom right most corner. Resulting in the longest path. Core 0 writes to the other core using a DMA transfer and then awaits a response. A timer is started before the core write to the remote address and stopped after it received an answer. The DMA can potentially support 64 Bits per cycle.
 
