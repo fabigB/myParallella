@@ -31,4 +31,5 @@ runs 16 cores all doing the same filter operation (inverter / sobel) on a pictur
 ## nocPerformance:
 different projects analyzing the Performance of the NoC
 
+A Parallella with a E16G301 epiphany processor was used for all projects.
 
